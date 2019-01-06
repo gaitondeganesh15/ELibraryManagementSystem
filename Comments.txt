@@ -1,0 +1,2849 @@
+ <!--/*********************************************************************************
+ File           : Administrator.xaml
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 17-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/-->
+  
+    <Window x:Class="ELibraryMgmtSys.Administrator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELibraryMgmtSys"
+        mc:Ignorable="d"
+        Title="Administrator" Height="450" Width="800" WindowState="Maximized" Loaded="Window_Loaded">
+
+    <Window.Background>
+        <ImageBrush ImageSource=".\Images\libarary1.jpg" />
+    </Window.Background>
+
+    <Viewbox>
+        <Grid Width="1510" Height="800" >
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <VisualBrush x:Key="search" Stretch="None" AlignmentX="Left" AlignmentY="Top" >
+                    <VisualBrush.Transform>
+                        <TranslateTransform X="5" Y="7" />
+                    </VisualBrush.Transform>
+                    <VisualBrush.Visual>
+                        <Grid HorizontalAlignment="Left">
+                            <TextBlock FontFamily="Times New Roman" FontSize="20" FontWeight="Normal" HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" Foreground="Black" FontStyle="Italic" Opacity="1"
+                                   Text="Search Here"/>
+                        </Grid>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Grid.Resources>
+
+            <StackPanel Name="topStack" Height="150" VerticalAlignment="Top" Opacity="0.7" Background="#FFF3F3F3" Grid.ColumnSpan="2" Margin="0,-38,0,0">
+                <TextBlock FontSize="45" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="455,30,435,53" Width="597" Height="50" ><Run Text="E-Library Management System"/></TextBlock>
+                <Image Source=".\Images\home_btn.png" x:Name="Home" Height="66"  Margin="1090,-60,330,0" />
+                <Button Name="btn_Home" Margin="1090,-65,330,0" Height="55" Width="60" Opacity="0" Click="btn_Home_Click" />
+                <Image Source=".\Images\logo.jpg" Height="150" Width="250" HorizontalAlignment="Left" Margin="100,-130,0,25" />
+                <TextBox FontSize="18" FontWeight="Bold" FontStyle="Oblique" x:Name="waterMarkTextBox" Width="269" Height="40"  BorderThickness="5" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1190,-95,0,0" KeyDown="OnKeyDownHandler" >
+
+                    <TextBox.Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontSize" Value="10"/>
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=waterMarkTextBox}" Value="" >
+                                    <Setter Property="Background" Value="{StaticResource search}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <TextBlock FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="0" Foreground="Black" Margin="1187,-170,148,53" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="175" Text="User Name" Height="22"/>
+            </StackPanel>
+            <TextBlock FontSize="40" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="0" Foreground="#FF277BBE" Margin="606,45,607,9" Grid.ColumnSpan="2" Width="297" VerticalAlignment="Center" Text="Welcome Admin"/>
+
+            <!--Options Buttons-->
+
+            <GroupBox Margin="105,41,350,18" Background="White" Width="300" Grid.RowSpan="5" Grid.Row="1"  Opacity="0.7">
+                <Canvas Margin="0,0,-12,0"  Height="598" VerticalAlignment="Top" Grid.RowSpan="5" Grid.Column="0" RenderTransformOrigin="1.798,0.643" Grid.Row="1">
+                    <StackPanel VerticalAlignment="Center" Width="306" Height="588" Orientation="Vertical" Canvas.Left="-6" >
+                        <Button Content="Add Document" Width="200" Height="35" Margin="10,50,10,10" x:Name="btnAddDocument" FontFamily="Times New Roman" FontWeight="Bold" FontStyle="Italic" FontSize="16" BorderThickness="02,02,02,02" BorderBrush="DarkBlue" Opacity="0.9" Click="btnAddDocument_Click"/>
+                        <Button Content="View Personal" Width="200" Height="35" Margin="10,90,10,10" x:Name="btnViewPerson" FontFamily="Times New Roman" FontWeight="Bold" FontStyle="Italic" FontSize="16" BorderThickness="02,02,02,02" BorderBrush="DarkBlue" Opacity="0.9" Click="btnViewPerson_Click"/>
+                        <Button Content="View Documents" Width="200" Height="35" Margin="10,90,10,10" x:Name="btnViewDocument" FontFamily="Times New Roman" FontWeight="Bold" FontStyle="Italic" FontSize="16" BorderThickness="02,02,02,02" BorderBrush="DarkBlue" Opacity="0.9" Click="btnViewDocument_Click"/>
+                        <Button Content="Edit User Details" Width="200" Height="35" Margin="10,90,10,10" x:Name="btnEditUserDetails" FontFamily="Times New Roman" FontWeight="Bold" FontStyle="Italic" FontSize="16" BorderThickness="02,02,02,02" BorderBrush="DarkBlue" Opacity="0.9" Click="btnEditUserDetails_Click"/>
+                    </StackPanel>
+                </Canvas>
+            </GroupBox>
+
+            <!-- Add Documents Details -->
+
+            <GroupBox x:Name="addDocumentDetails" Background="White" Opacity="0.7" Header="Document Details" FontFamily="Times New Roman" FontSize="17" FontWeight="Bold" FontStyle="Italic" Grid.ColumnSpan="2" Margin="606,31,149,18" Grid.RowSpan="5" Grid.Row="1">
+                <Canvas Margin="-10,-10,8,-16" Height="608" VerticalAlignment="Bottom" Grid.RowSpan="5" RenderTransformOrigin="1.798,0.643" Grid.ColumnSpan="2" Grid.Row="1">
+                    <TextBlock Height="20" HorizontalAlignment="Left" Margin="40,25,0,0"  VerticalAlignment="Top" Width="247" OpacityMask="Crimson" Foreground="#FFE5572C">Enter Document ID :</TextBlock>
+                    <TextBox Width="300" Margin="338,24,73,26" Name="txtID" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="78">Enter Document Name :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="78" Name="txtDname"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="132">Enter Description :</TextBlock>
+                    <TextBox Width="300" Height="50" Canvas.Left="338" Canvas.Top="132" Name="txtDecription"/>
+                    
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="196">Enter Path :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="196" Name="txtPath"/>                    
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="250">Enter Document Type ID :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="250" Name="txtDTypeID"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="301">Disipline ID :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="301" Name="txtDID"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="349">Title :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="493" Name="txtTitle"/>
+
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="395">Author :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="349" Name="txtAuthor"/>
+
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="443">Select Upload Date :</TextBlock>
+                    <DatePicker Width="300" Canvas.Left="338" Canvas.Top="439" Name="txtDate"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="493">Price :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="395" Name="txtPrice"/>
+
+
+
+                    <StackPanel HorizontalAlignment="Center" Width="626" Height="45" Canvas.Left="60" Canvas.Top="548" Orientation="Horizontal">
+                        <Button Content="Submit" Width="100" Height="25" Margin="40,0,10,0" Name="addDocumentDetails_btnSubmit" Click="addDocumentDetails_btnSubmit_Click"></Button>
+                        <Button Content="Reset" Width="100" Height="25" Margin="60,0,10,0" Name="addDocumentDetails_btnReset" Click="addDocumentDetails_btnReset_Click" />
+                        <Button Content="Close" Width="100" Height="25" Margin="60,0,0,0" Name="addDocumentDetails_btnClose" Click="addDocumentDetails_btnClose_Click" ></Button>
+                    </StackPanel>
+                </Canvas>
+            </GroupBox>
+
+            <!-- View Personal -->
+
+            <GroupBox Header="View Personal" x:Name="viewPerson" Foreground="Black" FontFamily="Times New Roman" FontSize="17" FontStyle="Italic" FontWeight="Bold" Margin="691,100,231,0" Background="White" Grid.RowSpan="3" Grid.Row="1"  Opacity="0.7" Grid.ColumnSpan="2">
+                <Canvas Margin="-10,-21,-2,-5"  Height="300" VerticalAlignment="Top" Grid.RowSpan="5" Grid.Column="0" RenderTransformOrigin="1.798,0.643" Grid.Row="1">
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="User ID : " Height="30" Width="90" Canvas.Left="60" Canvas.Top="70" />
+                    <TextBox Name="viewPerson_txtID" FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="200" Height="30" Canvas.Top="65" Width="250" />
+
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="User Name : " Height="30" Width="90" Canvas.Left="60" Canvas.Top="150" />
+                    <TextBox FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="200" Height="30" Canvas.Top="145" Width="250" />
+
+                    <Button Content="Search" x:Name="viewPerson_btnSearch" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="60" Height="40" Canvas.Top="230" Width="150" Click="viewPerson_btnSearch_Click" />
+                    <Button Content="Close" x:Name="viewPerson_btnClose" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="300" Height="40" Canvas.Top="230" Width="150" Click="viewPerson_btnClose_Click" />
+                </Canvas>
+            </GroupBox>
+
+            <GroupBox x:Name="viewUserDetails" FontFamily="Times New Roman" FontSize="17" FontStyle="Italic" FontWeight="Bold" Header="View User Details" Foreground="Black" Background="White" Margin="606,130,149,0" Grid.RowSpan="6" Opacity="0.7" Grid.ColumnSpan="2">
+                <Canvas Margin="0,-23,-2,-3" Height="625" VerticalAlignment="Bottom" Grid.Row="1" Grid.RowSpan="5" Grid.Column="0"  RenderTransformOrigin="1.798,0.643" Grid.ColumnSpan="2">
+
+                    <TextBlock Height="20" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="247" OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="36">User ID :</TextBlock>
+                    <ComboBox Width="300" Name="viewUserDetails_cmbID" IsEditable="True" Canvas.Left="338" Canvas.Top="36" Text="{Binding ElementName=viewUserDetails_cmbID, Path=SelectedItem.User_ID}" SelectionChanged="viewUserDetails_cmbID_SelectionChanged" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="76">First Name :</TextBlock>
+                    <TextBlock Width="300" Canvas.Left="338" Canvas.Top="76" Name="viewUserDetails_txtFname" Text="{Binding ElementName=viewUserDetails_cmbID, Path=SelectedItem.First_Name}" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="125">Last Name :</TextBlock>
+                    <TextBlock Width="300" Canvas.Left="338" Canvas.Top="125" Name="viewUserDetails_txtLname" Text="{Binding ElementName=viewUserDetails_cmbID, Path=SelectedItem.Last_Name}" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="168">Date of Birth :</TextBlock>
+                    <TextBlock Width="300" Canvas.Left="338" Canvas.Top="168" Name="viewUserDetails_txtDob" Text="{Binding ElementName=viewUserDetails_cmbID, Path=SelectedItem.Date_Of_Birth}" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="210">Address :</TextBlock>
+                    <TextBlock Width="300" Height="50" Canvas.Left="338" Canvas.Top="210" Name="viewUserDetails_txtAddress" Text="{Binding ElementName=viewUserDetails_cmbID, Path=SelectedItem.Address}" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="290">Landline Number :</TextBlock>
+                    <TextBlock Width="300" Canvas.Left="338" Canvas.Top="290" Name="viewUserDetails_txtLnumber" Text="{Binding ElementName=viewUserDetails_cmbID, Path=SelectedItem.Land_Line_Number}" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="336">Mobile Number :</TextBlock>
+                    <TextBlock Width="300" Canvas.Left="338" Canvas.Top="336" Name="viewUserDetails_txtMnumber" Text="{Binding ElementName=viewUserDetails_cmbID, Path=SelectedItem.Mobile_Number}" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="378">Area of Interests :</TextBlock>
+                    <CheckBox Name="viewUserDetails_cbLifeSci" Width="120" Canvas.Left="338" Canvas.Top="378" >Life Science</CheckBox>
+                    <CheckBox Name="viewUserDetails_cbPhySciEng" Width="280" Canvas.Left="464" Canvas.Top="378" >Physical Sciences and Engineering</CheckBox>
+                    <CheckBox Name="viewUserDetails_cbSocialSci" Width="220" Canvas.Left="338" Canvas.Top="398" >Social Sciences and Humanities</CheckBox>
+                    <CheckBox Name="viewUserDetails_cbHealth" Width="90" Canvas.Left="571" Canvas.Top="398" >Health</CheckBox>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="152"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="432">Gender :</TextBlock>
+                    <RadioButton GroupName="gender" Name="viewUserDetails_rbtMale" Width="80" Canvas.Left="338" Canvas.Top="432" >Male</RadioButton>
+                    <RadioButton GroupName="gender" Name="viewUserDetails_rbtFemale" Width="80" Canvas.Left="436" Canvas.Top="432" >Female</RadioButton>
+                    <RadioButton GroupName="gender" Name="viewUserDetails_rbtOther" Width="80" Canvas.Left="534" Canvas.Top="432" >Other</RadioButton>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="476">User Type :</TextBlock>
+                    <RadioButton Name="viewUserDetails_rbtSubscriber" GroupName="UserType" Width="100" Canvas.Left="338" Canvas.Top="476">Subscriber</RadioButton>
+                    <RadioButton Name="viewUserDetails_rbtNonSubscriber" GroupName="UserType" Width="130" Canvas.Left="446" Canvas.Top="476">Non-Subscriber</RadioButton>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="517">Date of Registration :</TextBlock>
+                    <TextBlock Width="300" Canvas.Left="338" Canvas.Top="517" Name="viewUserDetails_txtDateOfRegist" Text="{Binding ElementName=viewUserDetails_cmbID, Path=SelectedItem.Date_Of_Registration}" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="550">Password :</TextBlock>
+                    <TextBlock Width="300" Canvas.Left="338" Canvas.Top="550" Name="viewUserDetails_txtPassword" Text="{Binding ElementName=viewUserDetails_cmbID, Path=SelectedItem.Password}" />
+
+                    <StackPanel HorizontalAlignment="Center" Width="654" Height="47" Canvas.Left="40" Canvas.Top="575" Orientation="Horizontal">
+                        <Button Content="Close" Width="250" Height="30" Margin="230,10,10,7" x:Name="viewUserDetails_btnClose" Click="viewUserDetails_btnClose_Click" />
+                    </StackPanel>
+                </Canvas>
+            </GroupBox>
+
+            <!-- View Document -->
+
+            <GroupBox x:Name="viewDocumentsSearch" Header="View Documents" FontFamily="Times New Roman" FontSize="17" FontStyle="Italic" FontWeight="Bold" Margin="691,100,231,0" Background="White" Grid.RowSpan="3" Grid.Row="1"  Opacity="0.7" Grid.ColumnSpan="2">
+                <Canvas Margin="-10,-21,-2,-5"  Height="300" VerticalAlignment="Top" Grid.RowSpan="5" Grid.Column="0" RenderTransformOrigin="1.798,0.643" Grid.Row="1">
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="User ID : " Height="30" Width="90" Canvas.Left="60" Canvas.Top="70" />
+                    <TextBox FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="200" Height="30" Canvas.Top="65" Width="250" />
+
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="User Name : " Height="30" Width="90" Canvas.Left="60" Canvas.Top="150" />
+                    <TextBox FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="200" Height="30" Canvas.Top="145" Width="250" />
+
+                    <Button Content="Search" x:Name="viewDocumentsSearch_btnSearch" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="60" Height="40" Canvas.Top="230" Width="150" Click="viewDocumentsSearch_btnSearch_Click" />
+                    <Button Content="Close" x:Name="viewDocumentsSearch_btnClose" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="300" Height="40" Canvas.Top="230" Width="150" Click="viewDocumentsSearch_btnClose_Click" />
+                </Canvas>
+            </GroupBox>
+
+            <GroupBox x:Name="viewDocumentDetails" Background="White" Opacity="0.7" Header="View Document Details" FontFamily="Times New Roman" FontSize="17" FontWeight="Bold" FontStyle="Italic" Grid.ColumnSpan="2" Margin="606,31,149,18" Grid.RowSpan="5" Grid.Row="1">
+                <Canvas Margin="-10,-10,8,-16" Height="608" VerticalAlignment="Bottom" Grid.RowSpan="5" RenderTransformOrigin="1.798,0.643" Grid.ColumnSpan="2" Grid.Row="1">
+                    <TextBlock Height="20" HorizontalAlignment="Left" Margin="40,25,0,0"  VerticalAlignment="Top" Width="247" OpacityMask="Crimson" Foreground="#FFE5572C">Enter Document ID :</TextBlock>
+                    <TextBox Width="300" Margin="338,24,73,26" Name="viewDocuments_txtID" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="78">Enter Document Name :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="78" Name="viewDocuments_txtDname"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="196">Enter Path :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="196" Name="viewDocuments_txtPath"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="132">Enter Description :</TextBlock>
+                    <TextBox Width="300" Height="50" Canvas.Left="338" Canvas.Top="132" Name="viewDocuments_txtDecription"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="250">Enter Document Type ID :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="250" Name="viewDocuments_txtDTypeID"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="301">Disipline ID :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="301" Name="viewDocuments_txtDID"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="349">Title :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="493" Name="viewDocuments_txtTitle"/>
+
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="395">Author :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="349" Name="viewDocuments_txtAuthor"/>
+
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="443">Select Upload Date :</TextBlock>
+                    <DatePicker Width="300" Canvas.Left="338" Canvas.Top="439" Name="viewDocuments_txtDate"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="493">Price :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="395" Name="viewDocuments_txtPrice"/>
+
+
+
+                    <StackPanel HorizontalAlignment="Center" Width="626" Height="45" Canvas.Left="60" Canvas.Top="548" Orientation="Horizontal">
+                        <Button Content="Update" Width="100" Height="25" Margin="40,0,10,0" Name="viewDocuments_btnUpdate" Click="viewDocuments_btnUpdate_Click" ></Button>
+                        <Button Content="Reset" Width="100" Height="25" Margin="60,0,10,0" Name="viewDocuments_btnReset" Click="viewDocuments_btnReset_Click" />
+                        <Button Content="Close" Width="100" Height="25" Margin="60,0,0,0" Name="viewDocuments_btnClose" Click="viewDocuments_btnClose_Click" ></Button>
+                    </StackPanel>
+                </Canvas>
+            </GroupBox>
+
+            <!-- Search Personal Button -->
+
+            <GroupBox FontSize="17" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Foreground="Black" x:Name="searchPersonal" Header="Search Person" Margin="691,100,231,0" Background="White" Grid.RowSpan="3" Grid.Row="1"  Opacity="0.7" Grid.ColumnSpan="2">
+                <Canvas Margin="-10,-21,-2,-5"  Height="300" VerticalAlignment="Top" Grid.RowSpan="5" Grid.Column="0" RenderTransformOrigin="1.798,0.643" Grid.Row="1">
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="User ID : " Height="30" Width="90" Canvas.Left="60" Canvas.Top="70" />
+                    <TextBox FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="200" Height="30" Canvas.Top="65" Width="250" />
+
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="User Name : " Height="30" Width="90" Canvas.Left="60" Canvas.Top="150" />
+                    <TextBox FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="200" Height="30" Canvas.Top="145" Width="250" />
+
+                    <Button Content="Search" x:Name="searchPersonal_btnSearch" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="60" Height="40" Canvas.Top="230" Width="150" Click="searchPersonal_btnSearch_Click" />
+                    <Button Content="Close" x:Name="searchPersonal_btnClose" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="300" Height="40" Canvas.Top="230" Width="150" Click="searchPersonal_btnClose_Click" />
+
+                </Canvas>
+            </GroupBox>
+
+            <GroupBox x:Name="userDetails" FontFamily="Times New Roman" FontSize="17" FontStyle="Italic" FontWeight="Bold" Header="Edit User Details" Foreground="Black" Background="White" Margin="606,24,149,18" Grid.RowSpan="5" Opacity="0.7" Grid.ColumnSpan="2" Grid.Row="1">
+                <Canvas Margin="0,-23,-2,-3" Height="625" VerticalAlignment="Bottom" Grid.Row="1" Grid.RowSpan="5" Grid.Column="0"  RenderTransformOrigin="1.798,0.643" Grid.ColumnSpan="2">
+
+                    <TextBlock Height="20" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="247" OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="46">User ID :</TextBlock>
+                    <TextBox Width="300" Name="userDetails_txtID" Canvas.Left="338" Canvas.Top="46" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="86">First Name :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="86" Name="userDetails_txtFname"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="135">Last Name :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="137" Name="userDetails_txtLname"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="179">Date of Birth :</TextBlock>
+                    <DatePicker Width="300" Canvas.Left="338" Canvas.Top="179" Name="userDetails_txtDob"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="221">Address :</TextBlock>
+                    <TextBox Width="300" Height="50" Canvas.Left="338" Canvas.Top="221" Name="userDetails_txtAddress"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="300">Landline Number :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="300" Name="userDetails_txtLnumber"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="346">Mobile Number :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="346" Name="userDetails_txtMnumber"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="388">Area of Interests :</TextBlock>
+                    <CheckBox Name="userDetails_cbLifeSci" Width="100" Canvas.Left="338" Canvas.Top="388" >Life Science</CheckBox>
+                    <CheckBox Name="userDetails_cbPhySciEng" Width="240" Canvas.Left="464" Canvas.Top="388" >Physical Sciences and Engineering</CheckBox>
+                    <CheckBox Name="userDetails_cbSocialSci" Width="220" Canvas.Left="338" Canvas.Top="408" >Social Sciences and Humanities</CheckBox>
+                    <CheckBox Name="userDetails_cbHealth" Width="90" Canvas.Left="571" Canvas.Top="408" >Health</CheckBox>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="152"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="442">Gender :</TextBlock>
+                    <RadioButton GroupName="gender" Name="userDetails_rbtMale" Width="80" Canvas.Left="338" Canvas.Top="442" >Male</RadioButton>
+                    <RadioButton GroupName="gender" Name="userDetails_rbtFemale" Width="80" Canvas.Left="436" Canvas.Top="442" >Female</RadioButton>
+                    <RadioButton GroupName="gender" Name="userDetails_rbtOther" Width="80" Canvas.Left="534" Canvas.Top="442" >Other</RadioButton>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="486">User Type :</TextBlock>
+                    <RadioButton Name="userDetails_rbtSubscriber" GroupName="UserType" Width="100" Canvas.Left="338" Canvas.Top="486">Subscriber</RadioButton>
+                    <RadioButton Name="userDetails_rbtNonSubscriber" GroupName="UserType" Width="130" Canvas.Left="446" Canvas.Top="486">Non-Subscriber</RadioButton>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="527">Password :</TextBlock>
+                    <PasswordBox Width="300" Canvas.Left="338" Canvas.Top="527" Name="userDetails_txtPassword"/>
+
+                    <StackPanel HorizontalAlignment="Center" Width="654" Height="45" Canvas.Left="40" Canvas.Top="580" Orientation="Horizontal">
+                        <Button Content="Update" Width="100" Height="25" Margin="50,0,10,0" x:Name="userDetails_btnUpdate" Click="userDetails_btnUpdate_Click" />
+                        <Button Content="Delete" Width="100" Height="25" Margin="80,0,10,0" x:Name="userDetails_btnDelete" Click="userDetails_btnDelete_Click" />
+                        <Button Content="Close" Width="100" Height="25" Margin="80,0,0,0" x:Name="userDetails_btnClose" Click="userDetails_btnClose_Click" />
+                    </StackPanel>
+                </Canvas>
+            </GroupBox>
+
+        </Grid>
+    </Viewbox>
+</Window>
+--------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : Administrator.xaml.cs
+ Author         : Group 3
+ Desc           : ELib Management System
+ Creation Date  : 17-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using ELibraryMgmtSystemBL.BusinessLayer;
+
+namespace ELibraryMgmtSys
+{
+    /// <summary>
+    /// Interaction logic for Administrator.xaml
+    /// </summary>
+    public partial class Administrator : Window
+    {
+        ELibraryMgmtSystemBL.BusinessLayer.User_Details objUser = new ELibraryMgmtSystemBL.BusinessLayer.User_Details();
+        UserDetailsBL objUDBL = new UserDetailsBL();
+
+        DocumentDetailsBL objDocDetailsBL = new DocumentDetailsBL();
+        Document_Details objDocutmentDetails = new Document_Details();
+        UserDetailsBL objUserDetails = new UserDetailsBL();
+
+        public Administrator()
+        {
+            InitializeComponent();
+        }
+
+        public void PopulateUI()
+        {
+            IEnumerable<User_Details> userDetails = objUserDetails.SelectAll();
+            MessageBox.Show(userDetails.ToString());
+            //viewUserDetails_cmbID.ItemsSource = userDetails;
+            //viewUserDetails_cmbID.DisplayMemberPath = "User_ID";
+        }
+
+
+        public void Insert()  //for inserting data into Document Details Page.
+        {
+
+
+            objDocutmentDetails.Document_ID = Convert.ToInt32(txtID.Text);
+            objDocutmentDetails.Document_Name = txtDname.Text;
+            objDocutmentDetails.Document_Description = txtDecription.Text;
+            objDocutmentDetails.Document_Path = txtPath.Text;
+            objDocutmentDetails.Document_Type_ID = Convert.ToInt32(txtDTypeID.Text);
+            objDocutmentDetails.Discipline_ID = Convert.ToInt32(txtDID.Text);
+            objDocutmentDetails.Title = txtTitle.Text;
+            objDocutmentDetails.Author = txtAuthor.Text;
+            objDocutmentDetails.Upload_Date = Convert.ToDateTime(txtDate.Text);
+            objDocutmentDetails.Price = Convert.ToInt32(txtPrice.Text);
+
+
+            bool status = objDocDetailsBL.AddDocumentDetails(objDocutmentDetails);
+            if (status)
+            {
+                MessageBox.Show("Submitted Successfully!!!");
+            }
+        }
+
+
+        // #######******* On Window Loaded Contols #######*******
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            addDocumentDetails.Visibility = Visibility.Hidden;
+            viewDocumentsSearch.Visibility = Visibility.Hidden;
+            viewDocumentDetails.Visibility = Visibility.Hidden;
+            viewPerson.Visibility = Visibility.Hidden;
+            searchPersonal.Visibility = Visibility.Hidden;
+            userDetails.Visibility = Visibility.Hidden;
+            viewUserDetails.Visibility = Visibility.Hidden;
+        }
+
+        // #######******* 4 Buttons Option Controls #######*******
+
+        private void btnAddDocument_Click(object sender, RoutedEventArgs e)
+        {
+            viewDocumentsSearch.Visibility = Visibility.Hidden;
+            addDocumentDetails.Visibility = Visibility.Visible;
+            viewPerson.Visibility = Visibility.Hidden;
+            searchPersonal.Visibility = Visibility.Hidden;
+            userDetails.Visibility = Visibility.Hidden;
+            viewDocumentDetails.Visibility = Visibility.Hidden;
+            viewUserDetails.Visibility = Visibility.Hidden;
+        }
+
+        private void btnViewPerson_Click(object sender, RoutedEventArgs e)
+        {
+            addDocumentDetails.Visibility = Visibility.Hidden;
+            viewDocumentsSearch.Visibility = Visibility.Hidden;
+            viewPerson.Visibility = Visibility.Visible;
+            searchPersonal.Visibility = Visibility.Hidden;
+            userDetails.Visibility = Visibility.Hidden;
+            viewDocumentDetails.Visibility = Visibility.Hidden;
+            viewUserDetails.Visibility = Visibility.Hidden;
+        }
+
+        private void btnViewDocument_Click(object sender, RoutedEventArgs e)
+        {
+            addDocumentDetails.Visibility = Visibility.Hidden;
+            viewDocumentsSearch.Visibility = Visibility.Visible;
+            viewPerson.Visibility = Visibility.Hidden;
+            searchPersonal.Visibility = Visibility.Hidden;
+            userDetails.Visibility = Visibility.Hidden;
+            viewDocumentDetails.Visibility = Visibility.Hidden;
+            viewUserDetails.Visibility = Visibility.Hidden;
+
+        }
+
+        private void btnEditUserDetails_Click(object sender, RoutedEventArgs e)
+        {
+            addDocumentDetails.Visibility = Visibility.Hidden;
+            viewDocumentsSearch.Visibility = Visibility.Hidden;
+            viewPerson.Visibility = Visibility.Hidden;
+            searchPersonal.Visibility = Visibility.Visible;
+            userDetails.Visibility = Visibility.Hidden;
+            viewDocumentDetails.Visibility = Visibility.Hidden;
+            viewUserDetails.Visibility = Visibility.Hidden;
+
+        }
+
+        //  #######******* Add Documnet Details Controls #######*******
+
+
+        private void addDocumentDetails_btnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            Insert();
+        }
+
+        private void addDocumentDetails_btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            txtID.Text = String.Empty;
+            txtDname.Text = String.Empty;
+            txtPath.Text = String.Empty;
+            txtDecription.Text = String.Empty;
+            txtDTypeID.Text = String.Empty;
+            txtDID.Text = String.Empty;
+            txtTitle.Text = String.Empty;
+            txtAuthor.Text = String.Empty;
+            txtDate.Text = String.Empty;
+            txtPrice.Text = String.Empty;
+
+        }
+
+        private void addDocumentDetails_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            addDocumentDetails.Visibility = Visibility.Hidden;
+        }
+
+        //  #######******* View Person Controls #######*******
+
+        private void viewPerson_btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            viewPerson.Visibility = Visibility.Hidden;
+            viewUserDetails.Visibility = Visibility.Visible;
+            PopulateUI();
+        }
+
+        private void viewPerson_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            viewPerson.Visibility = Visibility.Hidden;
+        }
+
+        // View User Details
+
+        private void viewUserDetails_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            viewUserDetails.Visibility = Visibility.Hidden;
+            viewPerson.Visibility = Visibility.Visible;
+        }
+
+        // #######******* View Document Controls #######*******
+        // View Document Search
+
+        private void viewDocumentsSearch_btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            viewDocumentsSearch.Visibility = Visibility.Hidden;
+            viewDocumentDetails.Visibility = Visibility.Visible;
+        }
+
+        private void viewDocumentsSearch_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            viewDocumentsSearch.Visibility = Visibility.Hidden;
+        }
+
+        // View Document Details
+
+        private void viewDocuments_btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void viewDocuments_btnReset_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void viewDocuments_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            viewDocumentDetails.Visibility = Visibility.Hidden;
+            viewDocumentsSearch.Visibility = Visibility.Visible;
+        }
+
+        // #######******* Edit User Details #######*******
+
+        private void searchPersonal_btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            searchPersonal.Visibility = Visibility.Hidden;
+            userDetails.Visibility = Visibility.Visible;
+        }
+
+        private void searchPersonal_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            searchPersonal.Visibility = Visibility.Hidden;
+        }
+
+        // Edit User Details
+
+        //public void Add()
+        //{
+
+        //    objUser.User_ID = txtID.Text;
+
+        //    objUser.First_Name = userDetails_txtID.Text;
+        //    objUser.Last_Name = userDetails_txtLname.Text;
+        //    objUser.Date_Of_Birth = Convert.ToDateTime(userDetails_txtDob.Text);
+        //    objUser.Address = userDetails_txtAddress.Text;
+        //    objUser.Land_Line_Number = userDetails_txtLnumber.Text;
+        //    objUser.Mobile_Number = userDetails_txtMnumber.Text;
+        //    objUser.Area_Of_Intrests = objSB.ToString(); // checkbox
+        //    objUser.User_Type = userDetails_userType; //user type
+        //    objUser.Password = userDetails_txtPassword.ToString();
+
+        //    bool status = objUDBL.AddUserDetails(objUser);
+
+        //    if (status)
+        //    {
+        //        MessageBox.Show("Inserted Successfully !");
+        //    }
+
+        //}
+
+        private void userDetails_btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void userDetails_btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void userDetails_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            userDetails.Visibility = Visibility.Hidden;
+            searchPersonal.Visibility = Visibility.Visible;
+        }
+
+        private void viewUserDetails_cmbID_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        // #######******* Home Button #######*******
+
+        private void btn_Home_Click(object sender, RoutedEventArgs e)
+        {
+            var MainWindow = new MainWindow();   //create your new form.
+            MainWindow.Show();    //show the new form.
+            this.Close();
+        }
+
+        // #######******* On ENTER key hit for Search textbox #######*******
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                MessageBox.Show("Enter key pressed !");
+            }
+        }
+    }
+}
+---------------------------------------------------------------------------------
+
+ <!--/*********************************************************************************
+ File           : App.xaml
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 10-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/-->
+    <Application x:Class="ELibraryMgmtSys.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ELibraryMgmtSys"
+             StartupUri="RegistrationForm.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
+---------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : App.xaml.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 10-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+
+namespace ELibraryMgmtSys
+{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
+    {
+    }
+}
+--------------------------------------------------------------------------------------------
+ <!--/*********************************************************************************
+ File           : ChangeUserDetails.xaml
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 20-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/-->
+    <Window x:Class="ELibraryMgmtSys.ChangeUserDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELibraryMgmtSys"
+        mc:Ignorable="d"
+        Title="ChangeUserDetails" Height="450" Width="800" WindowState="Maximized" Loaded="Window_Loaded">
+
+    <Window.Background>
+        <ImageBrush ImageSource=".\Images\nlibrary.jpg" />
+    </Window.Background>
+
+    <Viewbox>
+        <Grid Width="1510" Height="800" >
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <VisualBrush x:Key="search" Stretch="None" AlignmentX="Left" AlignmentY="Top" >
+                    <VisualBrush.Transform>
+                        <TranslateTransform X="5" Y="7" />
+                    </VisualBrush.Transform>
+                    <VisualBrush.Visual>
+                        <Grid HorizontalAlignment="Left">
+                            <TextBlock FontFamily="Times New Roman" FontSize="20" FontWeight="Normal" HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" Foreground="Black" FontStyle="Italic" Opacity="1"
+                                   Text="Search Here"/>
+                        </Grid>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Grid.Resources>
+
+            <StackPanel Name="topStack" Height="150" VerticalAlignment="Top" Opacity="0.7" Background="#FFF3F3F3" Grid.ColumnSpan="2" Margin="0,-38,0,0">
+                <TextBlock FontSize="45" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="455,30,435,53" Width="597" Height="50" ><Run Text="E-Library Management System"/></TextBlock>
+                <Image Source=".\Images\home_btn.png" x:Name="Home" Height="66"  Margin="1090,-60,330,0" />
+                <Button Name="btn_Home" Margin="1090,-65,330,0" Height="55" Width="60" Opacity="0" Click="btn_Home_Click" />
+                <Image Source=".\Images\logo.jpg" Height="150" Width="250" HorizontalAlignment="Left" Margin="100,-130,0,25" />
+                <TextBox FontSize="18" FontWeight="Bold" FontStyle="Oblique" x:Name="waterMarkTextBox" Width="269" Height="40"  BorderThickness="5" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1190,-95,0,0" KeyDown="OnKeyDownHandler" >
+
+                    <TextBox.Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontSize" Value="10"/>
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=waterMarkTextBox}" Value="" >
+                                    <Setter Property="Background" Value="{StaticResource search}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <TextBlock FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="0" Foreground="Black" Margin="1187,-170,148,53" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="175" Text="User Name" Height="22"/>
+
+            </StackPanel>
+
+            <GroupBox Margin="105,0,301,79" Background="White" Grid.RowSpan="3" Grid.Row="2"  Opacity="0.7">
+                <Canvas Margin="0,0,-12,-6"  Height="322" VerticalAlignment="Top" Grid.RowSpan="5" Grid.Column="0" RenderTransformOrigin="1.798,0.643" Grid.Row="1">
+                    <StackPanel VerticalAlignment="Center" Width="345" Height="322" Orientation="Vertical" Canvas.Left="-6" >
+                        <Button Content="Edit Details" Width="200" Height="35" Margin="25,70,10,10" x:Name="btnEditDetails" FontFamily="Times New Roman" FontWeight="Bold" FontStyle="Italic" FontSize="16" BorderThickness="02,02,02,02" BorderBrush="DarkBlue" Opacity="0.9" Click="btnEditDetails_Click"/>
+                        <Button Content="Change Password" Width="200" Height="35" Margin="25,90,10,10" x:Name="btnChangePassword" FontFamily="Times New Roman" FontWeight="Bold" FontStyle="Italic" FontSize="16" BorderThickness="02,02,02,02" BorderBrush="DarkBlue" Opacity="0.9" Click="btnChangePassword_Click"/>
+                    </StackPanel>
+                </Canvas>
+            </GroupBox>
+
+            <!--Edit User Details-->
+
+            <GroupBox Header="View Details" x:Name="viewPerson" Foreground="Black" FontFamily="Times New Roman" FontSize="17" FontStyle="Italic" FontWeight="Bold" Margin="691,100,231,0" Background="White" Grid.RowSpan="3" Grid.Row="1"  Opacity="0.7" Grid.ColumnSpan="2">
+                <Canvas Margin="-10,-21,-2,-5"  Height="300" VerticalAlignment="Top" Grid.RowSpan="5" Grid.Column="0" RenderTransformOrigin="1.798,0.643" Grid.Row="1">
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="User ID : " Height="30" Width="90" Canvas.Left="60" Canvas.Top="70" />
+                    <TextBox Name="viewDetails_txtID" FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="200" Height="30" Canvas.Top="65" Width="250" />
+
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="User Name : " Height="30" Width="90" Canvas.Left="60" Canvas.Top="150" />
+                    <TextBox Name="viewDetails_txtName" FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="200" Height="30" Canvas.Top="145" Width="250" />
+
+                    <Button Content="Search" x:Name="viewDetails_btnSearch" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="60" Height="40" Canvas.Top="230" Width="150" Click="viewDetails_btnSearch_Click"  />
+                    <Button Content="Close" x:Name="viewDetails_btnClose" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="300" Height="40" Canvas.Top="230" Width="150"  Click="viewDetails_btnClose_Click" />
+                </Canvas>
+            </GroupBox>
+
+            <GroupBox x:Name="editUserDetails" FontFamily="Times New Roman" FontSize="17" FontStyle="Italic" FontWeight="Bold" Header="Edit User Details" Foreground="Black"  Background="White" Margin="621,10,134,32" Grid.RowSpan="5" Opacity="0.7" Grid.ColumnSpan="2" Grid.Row="1">
+                <Canvas Margin="0,-23,-2,-3" Height="625" VerticalAlignment="Bottom" Grid.Row="1" Grid.RowSpan="5" Grid.Column="0"  RenderTransformOrigin="1.798,0.643" Grid.ColumnSpan="2">
+
+                    <TextBlock Height="20" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="247" OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="46">User ID :</TextBlock>
+                    <TextBlock Width="300" Name="editUserDetails_txtID" Canvas.Left="338" Canvas.Top="46" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="86">First Name :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="86" Name="editUserDetails_txtFname"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="135">Last Name :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="137" Name="editUserDetails_txtLname"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="179">Date of Birth :</TextBlock>
+                    <DatePicker Width="300" Canvas.Left="338" Canvas.Top="179" Name="editUserDetails_txtDob"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="221">Address :</TextBlock>
+                    <TextBox Width="300" Height="50" Canvas.Left="338" Canvas.Top="221" Name="editUserDetails_txtAddress"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="300">Landline Number :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="300" Name="editUserDetails_txtLnumber"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="346">Mobile Number :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="346" Name="editUserDetails_txtMnumber"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="388">Area of Interests :</TextBlock>
+                    <CheckBox Name="editUserDetails_cbLifeSci" Width="100" Canvas.Left="338" Canvas.Top="388" >Life Science</CheckBox>
+                    <CheckBox Name="editUserDetails_cbPhySciEng" Width="240" Canvas.Left="464" Canvas.Top="388" >Physical Sciences and Engineering</CheckBox>
+                    <CheckBox Name="editUserDetails_cbSocialSci" Width="220" Canvas.Left="338" Canvas.Top="408" >Social Sciences and Humanities</CheckBox>
+                    <CheckBox Name="editUserDetails_cbHealth" Width="90" Canvas.Left="571" Canvas.Top="408" >Health</CheckBox>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="152"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="442">Gender :</TextBlock>
+                    <RadioButton GroupName="gender" Name="editUserDetails_rbtMale" Width="80" Canvas.Left="338" Canvas.Top="442" >Male</RadioButton>
+                    <RadioButton GroupName="gender" Name="editUserDetails_rbtFemale" Width="80" Canvas.Left="436" Canvas.Top="442" >Female</RadioButton>
+                    <RadioButton GroupName="gender" Name="editUserDetails_rbtOther" Width="80" Canvas.Left="534" Canvas.Top="442" >Other</RadioButton>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="486">User Type :</TextBlock>
+                    <RadioButton Name="editUserDetails_rbtSubscriber" GroupName="UserType" Width="100" Canvas.Left="338" Canvas.Top="486">Subscriber</RadioButton>
+                    <RadioButton Name="editUserDetails_rbtNonSubscriber" GroupName="UserType" Width="130" Canvas.Left="446" Canvas.Top="486">Non-Subscriber</RadioButton>
+
+                    <StackPanel HorizontalAlignment="Center" Width="654" Height="45" Canvas.Left="40" Canvas.Top="550" Orientation="Horizontal">
+                        <Button Content="Update" Width="170" Height="27" Margin="100,0,10,0" x:Name="editUserDetails_btnUpdate" Click="editUserDetails_btnUpdate_Click" />
+                        <Button Content="Close" Width="170" Height="27" Margin="100,0,0,0" x:Name="editUserDetails_btnClose" Click="editUserDetails_btnClose_Click" />
+                    </StackPanel>
+                </Canvas>
+            </GroupBox>
+
+            <!--Change Password-->
+
+            <GroupBox Header="Change Password" x:Name="changePassword" Foreground="Black" FontFamily="Times New Roman" FontSize="17" FontStyle="Italic" FontWeight="Bold" Margin="691,100,231,83" Background="White" Grid.RowSpan="4" Grid.Row="1"  Opacity="0.7" Grid.ColumnSpan="2">
+                <Canvas Margin="-10,-21,-2,-5"  Height="350" VerticalAlignment="Top" Grid.RowSpan="5" Grid.Column="0" RenderTransformOrigin="1.798,0.643" Grid.Row="1">
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="Current Password : " Height="30" Width="140" Canvas.Left="50" Canvas.Top="50" />
+                    <TextBox Name="changePassword_txtOldPassword" FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="260" Height="30" Canvas.Top="50" Width="250" />
+
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="New Password : " Height="30" Width="130" Canvas.Left="50" Canvas.Top="135" />
+                    <TextBox Name="changePassword_txtNewPassword1" FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="260" Height="30" Canvas.Top="135" Width="250" />
+
+                    <TextBlock FontSize="17" OpacityMask="Crimson" FontFamily="Times New Roman" FontStyle="Italic" Foreground="#FFE5572C" FontWeight="Bold"  Text="Confirm New Password : " Height="30" Width="180" Canvas.Left="50" Canvas.Top="210" />
+                    <TextBox Name="changePassword_txtNewPassword2" FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="260" Height="30" Canvas.Top="210" Width="250" />
+
+                    <Button Content="Update" x:Name="changePassword_btnUpdate" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="85" Height="40" Canvas.Top="275" Width="150" Click="changePassword_btnUpdate_Click"  />
+                    <Button Content="Close" x:Name="changePassword_btnClose" FontSize="20" FontStyle="Italic" FontFamily="Times New Roman" Canvas.Left="350" Height="40" Canvas.Top="275" Width="150" Click="changePassword_btnClose_Click" />
+                </Canvas>
+            </GroupBox>
+
+
+        </Grid>
+    </Viewbox>
+</Window>
+-------------------------------------------------------------------------------------------------------------------------
+
+/*********************************************************************************
+ File           : ChangeUserDetails.xaml.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 20-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace ELibraryMgmtSys
+{
+    /// <summary>
+    /// Interaction logic for ChangeUserDetails.xaml
+    /// </summary>
+    public partial class ChangeUserDetails : Window
+    {
+        public ChangeUserDetails()
+        {
+            InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            changePassword.Visibility = Visibility.Hidden;
+            editUserDetails.Visibility = Visibility.Hidden;
+        }
+
+        //#######******* Main Option Buttons #######*******
+
+        private void btnEditDetails_Click(object sender, RoutedEventArgs e)
+        {
+            viewPerson.Visibility = Visibility.Visible;
+            editUserDetails.Visibility = Visibility.Hidden;
+            changePassword.Visibility = Visibility.Hidden;
+        }
+
+        private void btnChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            changePassword.Visibility = Visibility.Visible;
+            viewPerson.Visibility = Visibility.Hidden;
+            editUserDetails.Visibility = Visibility.Hidden;
+        }        
+
+        //#######******* Edit User Details #######*******
+
+        //  View Details
+        private void viewDetails_btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            editUserDetails.Visibility = Visibility.Visible;
+            viewPerson.Visibility = Visibility.Hidden;
+        }
+
+        private void viewDetails_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+                     // Edit Details
+        private void editUserDetails_btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void editUserDetails_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            editUserDetails.Visibility = Visibility.Hidden;
+            viewPerson.Visibility = Visibility.Visible;
+        }
+
+        //#######******* Change Password #######*******
+
+        private void changePassword_btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void changePassword_btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            changePassword.Visibility = Visibility.Hidden;
+            viewPerson.Visibility = Visibility.Visible;
+        }
+
+        // #######******* Home Button #######*******
+
+        private void btn_Home_Click(object sender, RoutedEventArgs e)
+        {
+            var MainWindow = new MainWindow();   //create your new form.
+            MainWindow.Show();    //show the new form.
+            this.Close();
+        }
+
+
+        // #######******* On ENTER key hit for Search textbox #######*******
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                MessageBox.Show("Enter key pressed !");
+            }
+        }
+
+    }
+}
+
+----------------------------------------------------------------------------------------------------------
+
+ <!--/*********************************************************************************
+ File           : CreditCardDetails.xaml
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 24-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/-->
+    <Window x:Class="ELibraryMgmtSys.CreditCardDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELibraryMgmtSys"
+        mc:Ignorable="d"
+        Title="CreditCardDetails" Height="450" Width="800" WindowState="Minimized" >
+
+    <Window.Background>
+        <ImageBrush ImageSource=".\Images\libw.jpg" Opacity="0.9" ></ImageBrush>
+    </Window.Background>
+
+    <Viewbox>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="800"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <GroupBox Name="VerfyUser" Height="300" Width="650" Margin="310,107,518,140.667" Header="Enter User Details" Background="White" Opacity="0.7" Grid.ColumnSpan="2"  Grid.RowSpan="4">
+                <Canvas Width="650" Height="300" Margin="-04,-81,30,-76">
+                    <TextBlock HorizontalAlignment="Left" Height="37" Grid.Row="0" TextWrapping="Wrap" Text="Enter User ID : " VerticalAlignment="Top" Canvas.Left="45" Canvas.Top="140" Width="118" FontFamily="Times New Roman" FontSize="17"/>
+                    <TextBox Height="50" Width="350" Name="txtUserID" Canvas.Left="176" Canvas.Top="125" ></TextBox>
+                </Canvas>
+            </GroupBox>
+
+            <GroupBox x:Name="creditCard" Height="400" BorderThickness="1" BorderBrush="Black" Header="Credit Card Details" FontSize="17" FontStyle="Italic" FontWeight="Bold" FontFamily="Times New Roman" Background="Goldenrod" Margin="377,70,279,66.5" Grid.RowSpan="3" Opacity="0.9">
+                <Canvas Height="400" Grid.Column="1" Opacity="0.7" Margin="-2,-17,75,-9" Grid.Row="1" Grid.RowSpan="3">
+
+                    <Image Source=".\Images\MasterCard.png" MaxWidth="45" MaxHeight="45" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="232" Canvas.Top="23"/>
+                    <Image Source=".\Images\RuPay.jpg" MaxWidth="45" MaxHeight="45" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="300" Canvas.Top="23"/>
+                    <Image Source=".\Images\visa.png" MaxWidth="45" MaxHeight="45" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="361" Canvas.Top="16"/>
+
+                    <TextBlock Text="Enter Credit Card Details : " Canvas.Left="35" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="72" />
+                    <TextBox Name="txtCreditCardNo" Width="380" Height="37" Canvas.Left="35" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="105" Text="Credit Card Number" GotKeyboardFocus="txtCreditCardNo_GotKeyboardFocus" />
+                    <TextBox Name="txtCreditCardName" Width="380" Height="37" Canvas.Left="35" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="177" Text="Name on Card" GotKeyboardFocus="txtCreditCardName_GotKeyboardFocus"/>
+                    <TextBox Name="txtCreditDateMonth" Width="56" Height="37" Canvas.Left="35" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Text=" mm " Canvas.Top="258" GotKeyboardFocus="txtCreditDateMonth_GotKeyboardFocus" />
+                    <TextBlock Text="|" Canvas.Left="104" FontSize="55" FontFamily="Times New Roman" Background="Goldenrod" FontStyle="Italic" Canvas.Top="244" Height="55" Width="16" RenderTransformOrigin="0.5,0.5" >
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="7.328"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+
+                    <TextBox Name="txtCreditDateYear" Width="63" Height="37" Canvas.Left="128" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Text=" yyyy " Canvas.Top="258" GotKeyboardFocus="txtCreditDateYear_GotKeyboardFocus" />
+
+                    <TextBox Name="txtCreditCVVno" Width="150" Height="37" Canvas.Left="265" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="258" Text="CVV" GotKeyboardFocus="txtCreditCVVno_GotKeyboardFocus" />
+
+                    <StackPanel HorizontalAlignment="Center" Width="380" Height="45" Canvas.Left="35" Canvas.Top="335" Orientation="Horizontal">
+                        <Button Content="Submit" Width="100" Height="25" Margin="50,0,10,0" x:Name="creditCard_btnRegister" Click="creditCard_btnRegister_Click" />
+                        <Button Content="Reset" Width="100" Height="25" Margin="80,0,10,0" x:Name="creditCard_btnReset" Click="creditCard_btnReset_Click" />
+                    </StackPanel>
+
+                </Canvas>
+            </GroupBox>
+
+        </Grid>
+    </Viewbox>
+</Window>
+-----------------------------------------------------------------------------------------------------------------------
+
+/*********************************************************************************
+ File           : CreditCardDetails.xaml.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 24-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace ELibraryMgmtSys
+{
+    /// <summary>
+    /// Interaction logic for CreditCardDetails.xaml
+    /// </summary>
+    public partial class CreditCardDetails : Window
+    {
+        public CreditCardDetails()
+        {
+            InitializeComponent();
+        }
+
+        // #######******* Credit Card Buttons #######*******
+
+        private void creditCard_btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            string cardNum = txtCreditCardNo.Text;
+            int dateMonth = Convert.ToInt32(txtCreditDateMonth.Text);
+            int dateYear = Convert.ToInt32(txtCreditDateYear.Text);
+            string cvvNum = txtCreditCVVno.Text;
+
+            string currentDate = DateTime.Now.ToString();
+            DateTime datevalue = (Convert.ToDateTime(currentDate.ToString()));
+
+            int day = Convert.ToInt32(datevalue.Day.ToString());
+            int month = Convert.ToInt32(datevalue.Month.ToString());
+            int year = Convert.ToInt32(datevalue.Year.ToString());
+
+            string monthCompare = DateTime.Now.Month.ToString();
+            string yearCompare = DateTime.Now.Year.ToString();
+
+            if (cardNum.Length == 16 && dateMonth >= month && dateYear >= year && cvvNum.Length == 3)
+            {
+                MessageBox.Show("You are now a Subscribed user, Thank You for using E-Library System.");
+                
+            }
+            else
+            {
+                MessageBox.Show("Sorry Your Credit Card Details were incorrect you are now Registered as a Non-Subscribed user, Thank You. ");
+                
+            }
+
+           
+            var DisciplineSearch = new DisciplineSearch();   //create your new form.
+            DisciplineSearch.Show();    //show the new form.
+            this.Close();   //only if you want to close the current form.
+
+        }
+
+        private void creditCard_btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            txtCreditCardNo.Text = String.Empty;
+            txtCreditDateMonth.Text = String.Empty;
+            txtCreditDateYear.Text = String.Empty;
+            txtCreditCVVno.Text = String.Empty;
+        }
+
+        // TextBox Clearing Function
+
+        private void txtCreditCardNo_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "Credit Card Number")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditCardName_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "Name on Card")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditDateMonth_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == " mm ")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditDateYear_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == " yyyy ")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditCVVno_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "CVV")
+                txtBox.Text = string.Empty;
+        }
+
+        
+    }
+}
+------------------------------------------------------------------------------------------------------------
+ <!--/*********************************************************************************
+ File           : DisciplineSearch.xaml
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 17-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/-->
+    <Window x:Class="ELibraryMgmtSys.DisciplineSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELibraryMgmtSys"
+        mc:Ignorable="d"
+        Title="DisciplineSearch" Height="450" Width="800" WindowState="Maximized" Loaded="Window_Loaded_1">
+
+    <Window.Background>
+        <ImageBrush ImageSource=".\Images\srchlibrary.jpg" Opacity="0.9"></ImageBrush>
+    </Window.Background>
+
+    <Viewbox>
+        <Grid Width="1510" Height="800">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="750"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <VisualBrush x:Key="search" Stretch="None" AlignmentX="Left" AlignmentY="Top" >
+                    <VisualBrush.Transform>
+                        <TranslateTransform X="5" Y="7" />
+                    </VisualBrush.Transform>
+                    <VisualBrush.Visual>
+                        <Grid HorizontalAlignment="Left">
+                            <TextBlock FontFamily="Times New Roman" FontSize="20" FontWeight="Normal" HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" Foreground="Black" FontStyle="Italic" Opacity="1"
+                                   Text="Search Here"/>
+                        </Grid>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Grid.Resources>
+
+            <StackPanel Name="topStack" Height="150" VerticalAlignment="Top" Opacity="0.7" Background="#FFF3F3F3" Grid.ColumnSpan="7" Margin="0,-38,0,0" Grid.RowSpan="2">
+                <TextBlock FontSize="45" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="455,30,435,53" Width="597" Height="50" ><Run Text="E-Library Management System"/></TextBlock>
+                <Image Source=".\Images\home_btn.png" x:Name="Home" Height="66"  Margin="1090,-60,330,0" />
+                <Button Name="btn_Home" Margin="1090,-65,330,0" Height="55" Width="60" Opacity="0" Click="btn_Home_Click" />
+                <Image Source=".\Images\logo.jpg" Height="150" Width="250" HorizontalAlignment="Left" Margin="100,-130,0,25" />
+                <TextBox FontSize="18" FontWeight="Bold" FontStyle="Oblique" x:Name="waterMarkTextBox" Width="269" Height="40"  BorderThickness="5" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1190,-95,0,0" KeyDown="OnKeyDownHandler" >
+
+                    <TextBox.Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontSize" Value="10"/>
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=waterMarkTextBox}" Value="" >
+                                    <Setter Property="Background" Value="{StaticResource search}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <TextBlock FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="0" Foreground="Black" Margin="1187,-170,148,53" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="175" Text="User Name" Height="22"/>
+
+            </StackPanel>
+
+
+            <TextBlock Name="Reg" Text="Start your Search" TextAlignment="Left" VerticalAlignment="Center" FontFamily="Times New Roman"
+            FontSize="40" FontWeight="Bold" Foreground="#FF277BBE" FontStyle="Italic" Height="49" Margin="584,32,0,51" HorizontalAlignment="Left" Width="365" Grid.Row="1" RenderTransformOrigin="0.436,0.175" Grid.ColumnSpan="3"/>
+
+            <Canvas Margin="73,110,105.333,34" Background="White" Grid.RowSpan="3" Grid.Column="0" Opacity="0.8" Grid.ColumnSpan="7" Grid.Row="1">
+
+
+                <!--<ComboBox Name="cmbType" Height="40" Width="307" RenderTransformOrigin="1.542,1.145" Canvas.Left="641" Canvas.Top="32" FontSize="15" FontFamily="Times New Roman" ></ComboBox>
+                <ComboBox Name="cmbDis" Height="40" Width="307" Canvas.Left="201" Canvas.Top="32" RenderTransformOrigin="0.573,1.139" FontSize="15" FontFamily="Times New Roman" ></ComboBox>-->
+
+                <TextBox Name="txtSearch" Grid.ColumnSpan="3" Width="930" Height="60" BorderThickness="1" BorderBrush="Black" Canvas.Left="106" Canvas.Top="52" RenderTransformOrigin="0.521,-0.158"  />
+                <Button Background="CadetBlue" Name="search" Content="Search"  Width="160" Height="48" RenderTransformOrigin="0.65,1.746" Canvas.Left="1106" Canvas.Top="64" FontWeight="Bold" FontStyle="Italic" FontSize="16" BorderThickness="02,02,02,02" FontFamily="Times New Roman" BorderBrush="DarkBlue" Opacity="0.9" Click="Search_Click" />
+            </Canvas>
+
+
+            <DataGrid Name="dgFiles" Grid.ColumnSpan="7" Margin="73,10,105,5" Grid.Row="5" Grid.RowSpan="6" AutoGenerateColumns="False" ItemsSource="{Binding Path=files}">
+
+                <DataGrid.Columns>
+                    <DataGridHyperlinkColumn Width="auto" Header="PDFs" Binding="{Binding Document_Path}" />
+                    <DataGridTextColumn Width="auto" Header="Author" Binding="{Binding Author}"/>
+                    <DataGridTextColumn Width="auto" Header="Price" Binding="{Binding Price}"/>
+                    <DataGridTextColumn Width="auto" Header="Doc_type" Binding="{Binding Document_Type_ID}"/>
+                    <DataGridTemplateColumn Header="Download">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <Button  Name="btnBuy" Click="BtnBuy_Click" Width="100">Buy Document</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <GroupBox Name="VerfyUser" Height="300" Width="650" Margin="426,27,54.333,116" Header="Enter User Details" Background="White" Opacity="0.7" Grid.ColumnSpan="4"  Grid.RowSpan="5" Grid.Row="6">
+                <Canvas Width="650" Height="300" Margin="-04,-81,30,-76">
+                    <TextBlock HorizontalAlignment="Left" Height="37" Grid.Row="0" TextWrapping="Wrap" Text="Enter User ID : " VerticalAlignment="Top" Canvas.Left="45" Canvas.Top="140" Width="118" FontFamily="Times New Roman" FontSize="17"/>
+                    <TextBox Height="50" Width="350" Name="txtUserID" Canvas.Left="176" Canvas.Top="125" ></TextBox>
+                    <Button Name="Btn_ValidateUser" Height="30" Width="150" Canvas.Left="239" Canvas.Top="242" Click="Btn_ValidateUser_Click">Validate</Button>
+                </Canvas>
+            </GroupBox>
+
+            <GroupBox x:Name="creditCard" Height="400" BorderThickness="1" BorderBrush="Black" Header="Credit Card Details" FontSize="17" FontStyle="Italic" FontWeight="Bold" FontFamily="Times New Roman" Background="Goldenrod" Margin="465,7,111.333,83" Grid.RowSpan="7" Opacity="0.9" Grid.ColumnSpan="4" Grid.Row="4">
+                <Canvas Height="400" Grid.Column="1" Opacity="0.7" Margin="-2,-17,75,-9" Grid.Row="1" Grid.RowSpan="3">
+
+                    <Image Source=".\Images\MasterCard.png" MaxWidth="45" MaxHeight="45" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="232" Canvas.Top="23"/>
+                    <Image Source=".\Images\RuPay.jpg" MaxWidth="45" MaxHeight="45" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="300" Canvas.Top="23"/>
+                    <Image Source=".\Images\visa.png" MaxWidth="45" MaxHeight="45" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="361" Canvas.Top="16"/>
+
+                    <TextBlock Text="Enter Credit Card Details : " Canvas.Left="35" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="72" />
+                    <TextBox Name="txtCreditCardNo" Width="380" Height="37" Canvas.Left="35" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="105" Text="Credit Card Number" GotKeyboardFocus="txtCreditCardNo_GotKeyboardFocus" />
+                    <TextBox Name="txtCreditCardName" Width="380" Height="37" Canvas.Left="35" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="177" Text="Name on Card" GotKeyboardFocus="txtCreditCardName_GotKeyboardFocus"/>
+                    <TextBox Name="txtCreditDateMonth" Width="56" Height="37" Canvas.Left="35" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Text=" mm " Canvas.Top="258" GotKeyboardFocus="txtCreditDateMonth_GotKeyboardFocus" />
+                    <TextBlock Text="|" Canvas.Left="104" FontSize="55" FontFamily="Times New Roman" Background="Goldenrod" FontStyle="Italic" Canvas.Top="244" Height="55" Width="16" RenderTransformOrigin="0.5,0.5" >
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="7.328"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+
+                    <TextBox Name="txtCreditDateYear" Width="63" Height="37" Canvas.Left="128" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Text=" yyyy " Canvas.Top="258" GotKeyboardFocus="txtCreditDateYear_GotKeyboardFocus" />
+
+                    <TextBox Name="txtCreditCVVno" Width="150" Height="37" Canvas.Left="265" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="258" Text="CVV" GotKeyboardFocus="txtCreditCVVno_GotKeyboardFocus" />
+
+                    <StackPanel HorizontalAlignment="Center" Width="380" Height="45" Canvas.Left="35" Canvas.Top="335" Orientation="Horizontal">
+                        <Button Content="Submit" Width="100" Height="25" Margin="50,0,10,0" x:Name="creditCard_btnRegister" Click="creditCard_btnRegister_Click" />
+                        <Button Content="Reset" Width="100" Height="25" Margin="80,0,10,0" x:Name="creditCard_btnReset" Click="creditCard_btnReset_Click" />
+                    </StackPanel>
+
+                </Canvas>
+            </GroupBox>
+
+        </Grid>
+    </Viewbox>
+</Window>
+------------------------------------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : DisciplineSearch.xaml.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 17-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using ELibraryMgmtSystemBL.BusinessLayer;
+
+namespace ELibraryMgmtSys
+{
+    /// <summary>
+    /// Interaction logic for DisciplineSearch.xaml
+    /// </summary>
+    public partial class DisciplineSearch : Window
+    {
+        //Credit objcredit = new Credit();
+        DisciplineBL objDisBL = new DisciplineBL();
+        Discipline objDis = new Discipline();
+        UserDetailsBL objUDbl = new UserDetailsBL();
+
+        string file;
+        double price;
+        string URL = @"./PDFs";
+        Document_Details obj = new Document_Details();
+        DocumentDetailsBL documentDetailsBL = new DocumentDetailsBL();
+        List<string> files = new List<string>();
+        int doc_type_id;
+
+
+
+        public DisciplineSearch()
+        {
+            InitializeComponent();
+            
+        }
+
+        //enter keyword to search
+        public void GetFiles()
+        {
+            try
+            {
+                string filename = txtSearch.Text;
+                List<Document_Details> dcfiles = objDisBL.GetFiles(filename);
+
+                //string itm = dgFiles.CurrentCell.Item.ToString();
+                dgFiles.ItemsSource = dcfiles;
+                foreach (var item in dcfiles)
+                {
+                    doc_type_id = item.Document_Type_ID;
+                    price = item.Price;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        //check document 
+        public void CheckDoc()
+        {
+            if (doc_type_id == 1)
+            {
+                Download();
+            }
+            else if (doc_type_id == 2)
+            {
+                //var credit = new Credit();
+                //credit.Show();
+
+
+            }
+            else
+            {
+                MessageBox.Show("Sorry!!!No Result Found!!!");
+            }
+        }
+
+        //search button
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            GetFiles();
+        }
+
+        
+        public void Download()
+        {
+            string fullAddress = URL + "/" + file;
+            WebClient webClient = new WebClient();
+
+            try
+            {
+                webClient.DownloadFile(fullAddress, file);
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine("The address can not be null");
+            }
+            catch (WebException)
+            {
+                Console.WriteLine("Invalid address or empty file.");
+            }
+            catch (NotSupportedException)
+            {
+                Console.WriteLine("This method does not support simultaneous downloads.");
+            }
+            finally
+            {
+                webClient.Dispose();
+            }
+
+            //GetFiles();
+
+            MessageBox.Show("File Downloaded");
+        }
+
+        private void BtnBuy_Click(object sender, RoutedEventArgs e)
+        {
+            CheckDoc();
+            dgFiles.Visibility = Visibility.Hidden;
+            VerfyUser.Visibility = Visibility.Visible;
+        }
+
+        private void creditCard_btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            string cardNum = txtCreditCardNo.Text;
+            int dateMonth = Convert.ToInt32(txtCreditDateMonth.Text);
+            int dateYear = Convert.ToInt32(txtCreditDateYear.Text);
+            string cvvNum = txtCreditCVVno.Text;
+
+            string currentDate = DateTime.Now.ToString();
+            DateTime datevalue = (Convert.ToDateTime(currentDate.ToString()));
+
+            int day = Convert.ToInt32(datevalue.Day.ToString());
+            int month = Convert.ToInt32(datevalue.Month.ToString());
+            int year = Convert.ToInt32(datevalue.Year.ToString());
+
+            string monthCompare = DateTime.Now.Month.ToString();
+            string yearCompare = DateTime.Now.Year.ToString();
+
+            if (cardNum.Length == 16 && dateMonth >= month && dateYear >= year && cvvNum.Length == 3)
+            {
+                MessageBox.Show("You are now a Subscribed user, Thank You for using E-Library System.");
+                Download();
+                
+            }
+            else
+            {
+                MessageBox.Show("Sorry Your Credit Card Details were incorrect you are now Registered as a Non-Subscribed user, Thank You. ");
+                
+            }
+
+            
+
+            //var DisciplineSearch = new DisciplineSearch();   //create your new form.
+            //DisciplineSearch.Show();    //show the new form.
+            //this.Close();   //only if you want to close the current form.
+
+        }
+
+        private void creditCard_btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            txtCreditCardNo.Text = String.Empty;
+            txtCreditDateMonth.Text = String.Empty;
+            txtCreditDateYear.Text = String.Empty;
+            txtCreditCVVno.Text = String.Empty;
+        }
+
+        // TextBox Clearing Function
+
+        private void txtCreditCardNo_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "Credit Card Number")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditCardName_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "Name on Card")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditDateMonth_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == " mm ")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditDateYear_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == " yyyy ")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditCVVno_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "CVV")
+                txtBox.Text = string.Empty;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // #######******* Home Button #######*******
+
+        private void btn_Home_Click(object sender, RoutedEventArgs e)
+        {
+            var MainWindow = new MainWindow();   //create your new form.
+            MainWindow.Show();    //show the new form.
+            this.Close();
+        }
+               
+
+        // #######******* On ENTER key hit for Search textbox #######*******
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                GetFiles();
+            }
+        }
+
+        public string UserCheck()
+        {
+            string userid = txtUserID.Text;
+            string status = objUDbl.CheckCust(userid);
+
+            return status;
+        }
+
+       // validate usertype
+        public void Validate()
+        {
+            string utype = UserCheck();
+            if (utype == "Subscriber")
+            {
+                price = price-(price * 0.2);
+                MessageBox.Show("Hello Subscriber!!!Your Discounted Amount is:" + price);
+                
+                
+
+            }
+            else
+            {
+                MessageBox.Show("Your Amount is" + price);
+                
+            }
+
+        }
+
+
+        private void Btn_ValidateUser_Click(object sender, RoutedEventArgs e)
+        {
+            VerfyUser.Visibility = Visibility.Hidden;
+            creditCard.Visibility = Visibility.Visible;
+
+            //objDisci.Validate();
+            Validate();
+            string utype = UserCheck();
+            //if (utype == "Subscriber")
+            //{
+
+            //    MessageBox.Show("Hello Subscriber!!!You got 20% Discount");
+            //    MessageBox.Show("Please Enter Credit card Details");
+
+            //}
+            //else if (utype == "Non - Subscriber")
+            //{
+            //    MessageBox.Show("Hello Non-Subscriber!!!You need to be a Subscriber to get Discount ");
+            //    MessageBox.Show("Please Enter Credit card Details");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("UserId doesnot exist!!!");
+            //}
+        }
+
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            VerfyUser.Visibility = Visibility.Hidden;
+            creditCard.Visibility = Visibility.Hidden;
+        }
+
+
+
+
+
+
+
+
+
+        // ***********************************************************************************
+
+        /* List<string> lst = null;
+         public DisciplineSearch()
+         {
+             InitializeComponent();
+             this.DataContext = new List<string> { "All Journals", "Life Science",  "Physical Sciences", "Social Sciences", "Health", "Engineering" };
+         }
+
+         private void Decspline_SelectionChanged(object sender, SelectionChangedEventArgs e)
+         {
+             update();
+         }
+
+         private void Allareas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+         {
+             if (allareas.SelectedValue.Equals("Agricultural and Biological Sciences") || allareas.SelectedValue.Equals("Biochemistry, Genetics and Molecular Biology") || allareas.SelectedValue.Equals("Immunology and Microbiology") || allareas.SelectedValue.Equals("Biochemistry, Genetics and Molecular Biology") || allareas.SelectedValue.Equals("Neuroscience"))
+             {
+                 decspline.ItemsSource = new List<string> { "Life Science" };
+             }
+             if (allareas.SelectedValue.Equals("Chemical Engineering") || allareas.SelectedValue.Equals("Computer Science") || allareas.SelectedValue.Equals("Earth and Planetary Sciences") || allareas.SelectedValue.Equals("Engineering") || allareas.SelectedValue.Equals("Environmental Science") || allareas.SelectedValue.Equals("Materials Science") || allareas.SelectedValue.Equals("Mathematics") || allareas.SelectedValue.Equals("Physics and Astronomy"))
+             {
+                 decspline.ItemsSource = new List<string> { "Physical Sciences" };
+             }
+             if (allareas.SelectedValue.Equals("Arts and Humanities") || allareas.SelectedValue.Equals("Business, Management and Accounting") || allareas.SelectedValue.Equals("Decision Sciences") || allareas.SelectedValue.Equals("Economics, Econometrics and Finance") || allareas.SelectedValue.Equals("Psychology") || allareas.SelectedValue.Equals("Social Sciences"))
+             {
+                 decspline.ItemsSource = new List<string> { "Social Sciences" };
+             }
+             if (allareas.SelectedValue.Equals("Dentistry") || allareas.SelectedValue.Equals("Health Professions") || allareas.SelectedValue.Equals("Medical students") || allareas.SelectedValue.Equals("Medicine") || allareas.SelectedValue.Equals("Nursing") || allareas.SelectedValue.Equals("Pharma") || allareas.SelectedValue.Equals("Toxicology") || allareas.SelectedValue.Equals("Veterinary Science and Veterinary Medicine"))
+             {
+                 decspline.ItemsSource = new List<string> { "Health" };
+             }
+             if (allareas.SelectedValue.Equals("Computer") || allareas.SelectedValue.Equals("instrumental") || allareas.SelectedValue.Equals("Machine learning") || allareas.SelectedValue.Equals("Mechanical") || allareas.SelectedValue.Equals("Metalurgy") || allareas.SelectedValue.Equals("Electrical") || allareas.SelectedValue.Equals("Aerospace"))
+             {
+                 decspline.ItemsSource = new List<string> { "Engineering" };
+             }
+
+         }
+
+         public List<string> update()
+         {
+             if (decspline.SelectedIndex == 0)
+             {
+                 lst = new List<string> { "Sub Categories" };
+                 allareas.ItemsSource = lst;
+             }
+             if (decspline.SelectedIndex == 1)
+             {
+                 lst = new List<string> { "Sub Categories", "Agricultural and Biological Sciences", "Biochemistry, Genetics and Molecular Biology", "Environmental Science", "Immunology and Microbiology", "Neuroscience" };
+                 allareas.ItemsSource = lst;
+             }
+             if (decspline.SelectedIndex == 2)
+             {
+                 lst = new List<string> { "Sub Categories", "Chemical Engineering", "Computer Science", "Earth and Planetary Sciences", "Engineering", "Environmental Science", "Materials Science", "Mathematics", "Physics and Astronomy" };
+                 allareas.ItemsSource = lst;
+             }
+             if (decspline.SelectedIndex == 3)
+             {
+                 lst = new List<string> { "Sub Categories", "Arts and Humanities", "Business, Management and Accounting", "Decision Sciences", "Economics, Econometrics and Finance", "Psychology", "Social Sciences" };
+                 allareas.ItemsSource = lst;
+             }
+             if (decspline.SelectedIndex == 4)
+             {
+                 lst = new List<string> { "Sub Categories", "Computer", "instrumental", "Machine learning", "Mechanical", "Metalurgy", "Electrical", "Toxicology", "Veterinary Science and Veterinary Medicine" };
+                 allareas.ItemsSource = lst;
+             }
+
+             if (decspline.SelectedIndex == 5)
+             {
+                 lst = new List<string> { "Sub Categories", "Dentistry", "Health Professions", "Medical students", "Medicine", "Nursing", "Pharma", "Aerospace" };
+                 allareas.ItemsSource = lst;
+             }
+             return lst;
+         } */
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------
+ <!--/*********************************************************************************
+ File           : MainWindow.xaml
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 18-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/-->
+    <Window x:Class="ELibraryMgmtSys.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELibraryMgmtSys"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+
+    <Window.Background>
+        <ImageBrush ImageSource=".\Images\library.jpg" Opacity="0.9" ></ImageBrush>
+    </Window.Background>
+
+    <Viewbox>
+        <Grid Width="1510" Height="800">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition Height="70"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="auto"/>
+                <!--<ColumnDefinition Width="auto"/>-->
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <VisualBrush x:Key="search" Stretch="None" AlignmentX="Left" AlignmentY="Top" >
+                    <VisualBrush.Transform>
+                        <TranslateTransform X="5" Y="7" />
+                    </VisualBrush.Transform>
+                    <VisualBrush.Visual>
+                        <Grid HorizontalAlignment="Left">
+                            <TextBlock FontFamily="Times New Roman" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" Foreground="Black" FontStyle="Italic" Opacity="1"
+                                   Text="Search Here"/>
+                        </Grid>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Grid.Resources>
+
+            <StackPanel Name="topStack" Height="150" VerticalAlignment="Top" Opacity="0.7" Background="#FFF3F3F3" Grid.ColumnSpan="2" Margin="0,-38,0,0">
+                <TextBlock FontSize="45" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="455,30,435,53" Width="597" Height="50" ><Run Text="E-Library Management System"/></TextBlock>
+                <Image Source=".\Images\home_btn.png" x:Name="Home" Height="66"  Margin="1090,-60,330,0" />
+                <Button Name="btn_Home" Margin="1090,-65,330,0" Height="55" Width="60" Opacity="0" Click="btn_Home_Click" />
+                <Image Source=".\Images\logo.jpg" Height="150" Width="250" HorizontalAlignment="Left" Margin="100,-130,0,25" />
+                <TextBox FontSize="18" FontWeight="Bold" FontStyle="Oblique" x:Name="waterMarkTextBox" Width="269" Height="40"  BorderThickness="5" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1190,-95,0,0" KeyDown="OnKeyDownHandler" >
+
+                    <TextBox.Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontSize" Value="10"/>
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=waterMarkTextBox}" Value="" >
+                                    <Setter Property="Background" Value="{StaticResource search}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <TextBlock FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="0" Foreground="Black" Margin="1187,-170,148,53" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="175" Text="User Name" Height="22"/>
+
+            </StackPanel>
+
+            <Canvas Margin="952,0,83,-244"  Height="423" VerticalAlignment="Bottom" Background="White"   Opacity="0.7"  Grid.Row="3" Grid.RowSpan="3" >
+
+                <Label Content="User Name : " Grid.Row="4" Height="40" Grid.Column="1" FontFamily="Times New Roman" FontWeight="Bold" FontSize="20" Foreground="Black" Canvas.Left="38" Canvas.Top="55"/>
+                <TextBox Name="txtUserName" FontSize="15" BorderThickness="1" Background="White" BorderBrush="Black" Width="219" Height="40" Grid.Row="4" Grid.Column="1" Canvas.Left="203" Canvas.Top="55"/>
+
+                <Label Content="Password : " FontFamily="Times New Roman" Grid.Row="4" Grid.Column="1" Height="40" FontWeight="Bold" FontSize="20" Foreground="Black" Grid.RowSpan="2" Canvas.Left="38" Canvas.Top="145"/>
+                <PasswordBox Name="txtPassword" FontSize="15" BorderThickness="1" BorderBrush="Black" Background="White" Grid.Row="5" Grid.Column="1" Width="219" Height="40" Canvas.Left="203" Canvas.Top="145" RenderTransformOrigin="0.5,0.5" AutomationProperties.IsRequiredForForm="True">
+                    <PasswordBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-1"/>
+                        </TransformGroup>
+                    </PasswordBox.RenderTransform>
+                </PasswordBox>
+
+                <ComboBox Name="cmbUserType" Width="190" Canvas.Left="140" Canvas.Top="220" Height="30" FontSize="15" FontStyle="Italic" FontFamily="Times New Roman" FontWeight="Bold">
+                    <ComboBoxItem>Subscriber</ComboBoxItem>
+                    <ComboBoxItem>Non-Subscriber</ComboBoxItem>
+                    <ComboBoxItem>Administrator</ComboBoxItem>
+                </ComboBox>
+
+                <Button Name="btnLognIn" Grid.Row="5" FontSize="20" FontStyle="Italic" FontWeight="Bold" Grid.Column="1" Height="40" Width="149" Background="LightSkyBlue"  FontFamily="Times New Roman" RenderTransformOrigin="1.643,0.407" Canvas.Left="159" Canvas.Top="285" BorderThickness="02,02,02,02" BorderBrush="DarkBlue" Opacity="0.9" Click="btnLognIn_Click">Log In</Button>
+                <TextBlock Grid.Row="5" Grid.Column="1" FontSize="20" FontWeight="Bold" Foreground="Black" FontStyle="Italic" Canvas.Left="130" Canvas.Top="360" FontFamily="Times New Roman">New User? Register 
+            <Hyperlink Name="goToRegistration" Click="goToRegistration_Click" >
+       Here..
+    </Hyperlink></TextBlock>
+            </Canvas>
+        </Grid>
+    </Viewbox>
+</Window>
+-----------------------------------------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : MainWindow.xaml.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 18-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using ELibraryMgmtSystemBL.BusinessLayer;
+
+namespace ELibraryMgmtSys
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        UserDetailsBL UDetailsBL = new UserDetailsBL();
+        User_Details objUser = new User_Details();
+        DisciplineBL obj = new DisciplineBL();
+        string userType;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        //login
+        public void Login()
+        {
+            string userName = txtUserName.Text;
+            string pass = txtPassword.Password;
+            ComboBoxItem typeItem = (ComboBoxItem)cmbUserType.SelectedItem;
+            userType = typeItem.Content.ToString();
+
+            bool status = UDetailsBL.Login(userName, pass, userType);
+            if (status)
+            {
+                MessageBox.Show("Login Successfully");
+                if (userType == "Administrator")
+                {
+                    var DocumentSearch = new Administrator();
+                    DocumentSearch.Show();
+                    this.Close();
+                }
+                else
+                {
+                    var DisciplineSearch = new DisciplineSearch();   //create your new form.
+                    DisciplineSearch.Show();    //show the new form.
+                    this.Close();   //only if you want to close the current form.
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please check your UserId or Password or UserType again!!!");
+            }
+        }
+
+        private void btnLognIn_Click(object sender, RoutedEventArgs e)
+        {
+            Login();
+            
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void WaterMarkTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        // #######******* Home Button #######*******
+
+        private void btn_Home_Click(object sender, RoutedEventArgs e)
+        {
+            var MainWindow = new MainWindow();   //create your new form.
+            MainWindow.Show();    //show the new form.
+            this.Close();
+        }
+
+        // #######******* On ENTER key hit for Search textbox #######*******
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                MessageBox.Show("Enter key pressed !");
+            }
+        }
+
+        private void goToRegistration_Click(object sender, RoutedEventArgs e)
+        {
+            var RegistrationForm = new RegistrationForm();
+            RegistrationForm.Show();
+            this.Close();
+        }
+    }
+}
+------------------------------------------------------------------------------------------------------
+
+ <!--/*********************************************************************************
+ File           : RegistrationForm.xaml
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 22-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/-->
+    <Window x:Class="ELibraryMgmtSys.RegistrationForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELibraryMgmtSys"
+        mc:Ignorable="d"
+        Title="RegistrationForm" Height="450" Width="800" WindowState="Maximized" Loaded="Window_Loaded">
+
+    <Window.Background>
+        <ImageBrush ImageSource=".\Images\library 17.jpg"></ImageBrush>
+    </Window.Background>
+
+    <Viewbox>
+        <Grid Width="1510" Height="797">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+                <RowDefinition Height="0.15*"></RowDefinition>
+                <RowDefinition Height="0.85*"></RowDefinition>
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="800"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <Style x:Key="BigFontButtonStyle">
+                    <Setter Property="Control.FontFamily" Value="Times New Roman"/>
+                    <Setter Property="Control.FontSize" Value="14" />
+                    <Setter Property="Control.FontWeight" Value="DemiBold" />
+                </Style>
+                <VisualBrush x:Key="search" Stretch="None" AlignmentX="Left" AlignmentY="Top" >
+                    <VisualBrush.Transform>
+                        <TranslateTransform X="5" Y="7" />
+                    </VisualBrush.Transform>
+                    <VisualBrush.Visual>
+                        <Grid HorizontalAlignment="Left">
+                            <TextBlock FontFamily="Times New Roman" FontSize="20" FontWeight="Normal" HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" Foreground="Black" FontStyle="Italic" Opacity="1"
+                                   Text="Search Here"/>
+                        </Grid>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Grid.Resources>
+
+            <StackPanel Grid.RowSpan="2" Name="topStack" Height="150" VerticalAlignment="Top" Opacity="0.7" Background="#FFF3F3F3" Grid.ColumnSpan="2" Margin="0,-38,0,0">
+                <TextBlock FontSize="45" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Black" Margin="455,30,435,53" Width="597" Height="50" ><Run Text="E-Library Management System"/></TextBlock>
+                <Image Source=".\Images\home_btn.png" x:Name="Home" Height="66"  Margin="1090,-60,330,0" />
+                <Button Name="btn_Home" Margin="1090,-65,330,0" Height="55" Width="60" Opacity="0" Click="btn_Home_Click" />
+                <Image Source=".\Images\logo.jpg" Height="150" Width="250" HorizontalAlignment="Left" Margin="100,-130,0,25" />
+                <TextBox FontSize="18" FontWeight="Bold" FontStyle="Oblique" x:Name="waterMarkTextBox" Width="269" Height="40"  BorderThickness="5" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1190,-95,0,0" KeyDown="OnKeyDownHandler" >
+
+                    <TextBox.Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontSize" Value="10"/>
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=waterMarkTextBox}" Value="" >
+                                    <Setter Property="Background" Value="{StaticResource search}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <TextBlock FontSize="17" FontStyle="Italic" FontFamily="Times New Roman" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="0" Foreground="Black" Margin="1187,-170,148,53" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="175" Text="User Name" Height="22"/>
+
+            </StackPanel>
+
+
+            <GroupBox FontFamily="Times New Roman" FontSize="17" FontStyle="Italic" FontWeight="Bold" Header="Registration Form" Background="White" Margin="63,103,0,45" Grid.RowSpan="5" Opacity="0.7" Grid.Row="1">
+                <Canvas Style="{StaticResource BigFontButtonStyle}" Margin="0,-15,-2,-6" Height="592" VerticalAlignment="Bottom" Grid.Row="1" Grid.RowSpan="5" Grid.Column="0"  RenderTransformOrigin="1.798,0.643" Grid.ColumnSpan="2">
+
+                    <TextBlock Height="20" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="247" OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="30">Enter Customer ID :</TextBlock>
+                    <TextBlock Text="*" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Foreground="Red" Canvas.Left="167" Canvas.Top="30" Height="20" />
+                    <TextBox Width="300" Name="txtID" Canvas.Left="338" Canvas.Top="30" />
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="70">Enter First Name :</TextBlock>
+                    <TextBlock Text="*" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Foreground="Red"  Canvas.Left="157" Canvas.Top="70" Height="20"/>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="70" Name="txtFname"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="120">Enter Last Name :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="120" Name="txtLname"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="165">Enter Date of Birth :</TextBlock>
+                    <TextBlock Text="*" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Foreground="Red"  Canvas.Left="167" Height="20" Canvas.Top="165"/>
+                    <DatePicker Width="300" Canvas.Left="338" Canvas.Top="165" Name="txtDob"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="207">Enter Address :</TextBlock>
+                    <TextBlock Text="*" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Foreground="Red"  Canvas.Left="137" Height="20" Canvas.Top="207"/>
+                    <TextBox Width="300" Height="50" Canvas.Left="338" Canvas.Top="207" Name="txtAddress"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="267">Enter Landline Number :</TextBlock>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="267" Name="txtLnumber"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="305">Enter Mobile Number :</TextBlock>
+                    <TextBlock Text="*" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Foreground="Red"  Canvas.Left="183" Height="20" Canvas.Top="305"/>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="305" Name="txtMnumber"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="337">Select your Area of Interests :</TextBlock>
+                    <TextBlock Text="*" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Foreground="Red"  Canvas.Left="220" Height="20" Canvas.Top="337"/>
+                    <CheckBox Name="cbLifeSci" Width="100" Canvas.Left="338" Canvas.Top="337" Checked="CbLifeSci_Checked">Life Science</CheckBox>
+                    <CheckBox Name="cbPhySciEng" Width="240" Canvas.Left="464" Canvas.Top="337" Checked="cbPhySciEng_Checked">Physical Sciences and Engineering</CheckBox>
+                    <CheckBox Name="cbSocialSci" Width="220" Canvas.Left="338" Canvas.Top="360" Checked="cbSocialSci_Checked">Social Sciences and Humanities</CheckBox>
+                    <CheckBox Name="cbHealth" Width="90" Canvas.Left="571" Canvas.Top="360" Checked="cbHealth_Checked">Health</CheckBox>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="152"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="395">Gender :</TextBlock>
+                    <TextBlock Text="*" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Foreground="Red"  Canvas.Left="98" Height="20" Canvas.Top="395"/>
+                    <RadioButton GroupName="gender" Name="rbtMale" Width="80" Canvas.Left="338" Canvas.Top="395" Click="rbtMale_Click">Male</RadioButton>
+                    <RadioButton GroupName="gender" Name="rbtFemale" Width="80" Canvas.Left="436" Canvas.Top="395" Click="rbtFemale_Click">Female</RadioButton>
+                    <RadioButton GroupName="gender" Name="rbtOther" Width="80" Canvas.Left="534" Canvas.Top="395" Click="rbtOther_Click">Other</RadioButton>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="427">Password :</TextBlock>
+                    <TextBlock Text="*" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Foreground="Red"  Canvas.Left="110" Height="20" Canvas.Top="427"/>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="427" Name="txtPassword1"/>
+
+                    <TextBlock Height="20" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" Canvas.Left="40" Canvas.Top="462">Confirm Password :</TextBlock>
+                    <TextBlock Text="*" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Foreground="Red"  Canvas.Left="163" Height="20" Canvas.Top="462"/>
+                    <TextBox Width="300" Canvas.Left="338" Canvas.Top="462" Name="txtPassword2"/>
+
+                    <StackPanel HorizontalAlignment="Center" Width="654" Height="45" Canvas.Left="40" Canvas.Top="520" Orientation="Horizontal">
+                        <Button Content="Register" Width="100" Height="25" Margin="50,0,10,0" x:Name="btnRegister" Click="btnRegister_Click"/>
+                        <Button Content="Reset" Width="100" Height="25" Margin="80,0,10,0" x:Name="btnReset" Click="btnReset_Click"/>
+                        <Button Content="Cancel" Width="100" Height="25" Margin="80,0,0,0" x:Name="btnCancel" Click="btnCancel_Click"/>
+                    </StackPanel>
+
+                </Canvas>
+            </GroupBox>
+
+            <GroupBox x:Name="creditCard" BorderThickness="1" BorderBrush="Black" Header="Credit Card Details" FontSize="17" FontStyle="Italic" FontWeight="Bold" FontFamily="Times New Roman" Grid.Column="1" Background="Goldenrod" Width="450" Margin="171,103,89,64" Grid.Row="1" Grid.RowSpan="3" Opacity="0.9">
+                <Canvas Width="450" Grid.Column="1" Opacity="0.7" Margin="-2,-10,-10,-5" Grid.Row="1" Grid.RowSpan="3">
+
+                    <Image Source=".\Images\MasterCard.png" MaxWidth="45" MaxHeight="45" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="232" Canvas.Top="23"/>
+                    <Image Source=".\Images\RuPay.jpg" MaxWidth="45" MaxHeight="45" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="300" Canvas.Top="23"/>
+                    <Image Source=".\Images\visa.png" MaxWidth="45" MaxHeight="45" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="361" Canvas.Top="16"/>
+
+                    <TextBlock Text="Enter Credit Card Details : " Canvas.Left="35" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="62" />
+                    <TextBox Name="txtCreditCardNo" Width="380" Height="37" Canvas.Left="35" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="100" Text="Credit Card Number" GotKeyboardFocus="txtCreditCardNo_GotKeyboardFocus" />
+                    <TextBox Name="txtCreditCardName" Width="380" Height="37" Canvas.Left="35" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="153" Text="Name on Card" GotKeyboardFocus="txtCreditCardName_GotKeyboardFocus"/>
+                    <TextBox Name="txtCreditDateMonth" Width="56" Height="37" Canvas.Left="35" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Text=" mm " Canvas.Top="200" GotKeyboardFocus="txtCreditDateMonth_GotKeyboardFocus" />
+                    <TextBlock Text="|" Canvas.Left="94" FontSize="55" FontFamily="Times New Roman" Background="Goldenrod" FontStyle="Italic" Canvas.Top="186" Height="55" Width="16" RenderTransformOrigin="0.5,0.5" >
+                        <TextBlock.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="7.328"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+
+                    <TextBox Name="txtCreditDateYear" Width="63" Height="37" Canvas.Left="112" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Text=" yyyy " Canvas.Top="200" GotKeyboardFocus="txtCreditDateYear_GotKeyboardFocus" />
+
+                    <TextBox Name="txtCreditCVVno" Width="150" Height="37" Canvas.Left="265" FontSize="25" Background="Goldenrod" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Bold" Canvas.Top="200" Text="CVV" GotKeyboardFocus="txtCreditCVVno_GotKeyboardFocus" />
+
+                    <StackPanel HorizontalAlignment="Center" Width="380" Height="45" Canvas.Left="35" Canvas.Top="259" Orientation="Horizontal">
+                        <Button Content="Submit" Width="100" Height="25" Margin="50,0,10,0" x:Name="creditCard_btnRegister" Click="creditCard_btnRegister_Click" />
+                        <Button Content="Reset" Width="100" Height="25" Margin="80,0,10,0" x:Name="creditCard_btnReset" Click="creditCard_btnReset_Click" />
+                    </StackPanel>
+
+                </Canvas>
+            </GroupBox>
+        </Grid>
+    </Viewbox>
+</Window>
+------------------------------------------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : RegistrationForm.xaml.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 22-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using ELibraryMgmtSystemBL.BusinessLayer;
+
+namespace ELibraryMgmtSys
+{
+    /// <summary>
+    /// Interaction logic for RegistrationForm.xaml
+    /// </summary>
+    public partial class RegistrationForm : Window
+    {
+        string gender;
+        string userType;
+        UserDetailsBL objUDBL = new UserDetailsBL();
+       ELibraryMgmtSystemBL.BusinessLayer.User_Details objUser = new ELibraryMgmtSystemBL.BusinessLayer.User_Details();
+
+        StringBuilder objSB = new StringBuilder();
+
+
+        public RegistrationForm()
+        {
+            InitializeComponent();
+        }
+
+        public void Add()
+        {
+          
+            objUser.User_ID = txtID.Text;
+            objUser.First_Name = txtFname.Text;
+            objUser.Last_Name = txtLname.Text;
+            objUser.Date_Of_Birth = Convert.ToDateTime(txtDob.Text);
+            objUser.Address = txtAddress.Text;
+            objUser.Land_Line_Number = txtLnumber.Text;
+            objUser.Mobile_Number = txtMnumber.Text;
+            objUser.Area_Of_Intrests = objSB.ToString(); // checkbox
+            objUser.Gender = gender; //gender
+            objUser.User_Type = userType; //user type
+            objUser.Date_Of_Registration = Convert.ToDateTime(DateTime.Today);
+            objUser.Password = txtPassword1.Text;
+
+            bool status = objUDBL.AddUserDetails(objUser);
+            
+            if (status)
+            {
+                MessageBox.Show("Inserted Successfully !");
+            }
+          
+        }
+
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            Add();
+            creditCard.Visibility = Visibility.Visible;
+
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            txtAddress.Text = String.Empty;
+            txtDob.Text = String.Empty;
+            txtFname.Text = String.Empty;
+            txtID.Text = String.Empty;
+            txtLname.Text = String.Empty;
+            txtLnumber.Text = String.Empty;
+            txtMnumber.Text = String.Empty;
+            txtPassword1.Text = String.Empty;
+            txtPassword2.Text = String.Empty;
+
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void rbtMale_Click(object sender, RoutedEventArgs e)
+        {
+            if (rbtMale.IsEnabled)
+            {
+                gender = "M";
+            }
+        }
+        private void rbtFemale_Click(object sender, RoutedEventArgs e)
+        {
+            if (rbtFemale.IsEnabled)
+            {
+                gender = "F";
+            }
+        }
+        private void rbtOther_Click(object sender, RoutedEventArgs e)
+        {
+            if (rbtOther.IsEnabled)
+            {
+                gender = "O";
+            }
+        }
+        
+        private void cbPhySciEng_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cbPhySciEng.IsChecked.Value == true)
+            {
+                objSB.Append(" Physical Science & Engineering ");
+            }
+            objSB.Append(", ");
+        }
+
+        private void cbSocialSci_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cbSocialSci.IsChecked.Value == true)
+            {
+                objSB.Append(" Social Science & Humanities ");
+
+            }
+            objSB.Append(", ");
+        }
+
+        private void cbHealth_Checked(object sender, RoutedEventArgs e)
+        {
+            if (cbHealth.IsChecked.Value == true)
+            {
+                objSB.Append("Health");
+            }
+        }
+
+        private void CbLifeSci_Checked(object sender, RoutedEventArgs e)
+        {
+
+            if (cbLifeSci.IsChecked.Value == true)
+            {
+                objSB.Append(" Life Science ");
+
+            }
+            objSB.Append(", ");
+        }
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            creditCard.Visibility = Visibility.Hidden;
+        }
+
+        // #######******* Home Button #######*******
+
+        private void btn_Home_Click(object sender, RoutedEventArgs e)
+        {
+            var MainWindow = new MainWindow();   //create your new form.
+            MainWindow.Show();    //show the new form.
+            this.Close();
+        }
+
+        // #######******* On ENTER key hit for Search textbox #######*******
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                MessageBox.Show("Enter key pressed !");
+            }
+        }
+
+        // #######******* Credit Card Buttons #######*******
+
+        private void creditCard_btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            string cardNum = txtCreditCardNo.Text;
+            int dateMonth = Convert.ToInt32(txtCreditDateMonth.Text);
+            int dateYear = Convert.ToInt32(txtCreditDateYear.Text);
+            string cvvNum = txtCreditCVVno.Text;
+
+            string currentDate = DateTime.Now.ToString();
+            DateTime datevalue = (Convert.ToDateTime(currentDate.ToString()));
+
+            int day = Convert.ToInt32(datevalue.Day.ToString());
+            int month = Convert.ToInt32(datevalue.Month.ToString());
+            int year = Convert.ToInt32(datevalue.Year.ToString());
+
+            string monthCompare = DateTime.Now.Month.ToString();
+            string yearCompare = DateTime.Now.Year.ToString();
+
+            if (cardNum.Length == 16 && dateMonth >= month && dateYear >= year &&  cvvNum.Length == 3)
+            {
+                MessageBox.Show("You are now a Subscribed user, Thank You for using E-Library System.");
+                userType = "Subscriber";
+            }
+            else
+            {
+                MessageBox.Show("Sorry Your Credit Card Details were incorrect you are now Registered as a Non-Subscribed user, Thank You. ");
+                userType = "Non - Subscriber";
+            }
+
+            Add();
+
+            var DisciplineSearch = new DisciplineSearch();   //create your new form.
+            DisciplineSearch.Show();    //show the new form.
+            this.Close();   //only if you want to close the current form.
+
+        }
+
+        private void creditCard_btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            txtCreditCardNo.Text = String.Empty;
+            txtCreditDateMonth.Text = String.Empty;
+            txtCreditDateYear.Text = String.Empty;
+            txtCreditCVVno.Text = String.Empty;
+        }
+
+        // TextBox Clearing Function
+
+        private void txtCreditCardNo_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "Credit Card Number")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditCardName_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "Name on Card")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditDateMonth_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == " mm ")
+                txtBox.Text = string.Empty;
+        }        
+
+        private void txtCreditDateYear_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == " yyyy ")
+                txtBox.Text = string.Empty;
+        }
+
+        private void txtCreditCVVno_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            TextBox txtBox = sender as TextBox;
+            if (txtBox.Text == "CVV")
+                txtBox.Text = string.Empty;
+        }
+    }
+}
+-------------------------------------------------------------------------------------------------------
+
+/*********************************************************************************
+ File           : ELibraryMgmtSysException.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 15-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ELibraryMgmtSystem.Exceptions
+{
+    //ELibraryMgmtSysException inherited from ApplicationException
+    public class ELibraryMgmtSysException : ApplicationException
+    {
+        public ELibraryMgmtSysException() : base()
+        {
+
+        }
+        public ELibraryMgmtSysException(string message) : base(message)
+        {
+
+        }
+        public ELibraryMgmtSysException(string message, Exception exception) : base(message, exception)
+        {
+
+        }
+    }
+}
+-----------------------------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : DisciplineBL.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 10-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ELibraryMgmtSystem.Exceptions;
+
+namespace ELibraryMgmtSystemBL.BusinessLayer
+{
+    public class DisciplineBL
+    {
+        //Object of Training_24Oct18_PuneEntities is Referenced to null.
+        Training_24Oct18_PuneEntities objDisciplineDbContext = null;
+        
+        //Consutructor of DisciplineBL class is used to initialize the object.
+        public DisciplineBL()
+        {
+            objDisciplineDbContext = new Training_24Oct18_PuneEntities();
+        }
+
+        //search by keyword
+        public List<Document_Details> GetFiles(string filename)
+        {
+            //try catch block is used to handle exception
+            try
+            {
+                var doclist = (from d in objDisciplineDbContext.Document_Details
+                               where d.Document_Path.Contains(filename)
+                               select d).ToList();//LINQ query is used here for searching.
+
+                return doclist;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }       
+
+    }
+}
+--------------------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : DocumentDetailsBL.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 10-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ELibraryMgmtSystem.Exceptions;
+
+namespace ELibraryMgmtSystemBL.BusinessLayer
+{
+    public class DocumentDetailsBL
+    {
+        //Object of Training_24Oct18_PuneEntities is Referenced to null.
+        Training_24Oct18_PuneEntities objDocumentDetailsDbcontext = null;
+
+        //Consutructor of DocumentDetailsBL class is used to initialize the object.
+        public DocumentDetailsBL()
+        {
+            objDocumentDetailsDbcontext = new Training_24Oct18_PuneEntities();
+        }
+
+        //add document details
+        public bool AddDocumentDetails(Document_Details objDocDetails)
+        {
+            bool isAdd = false;
+            //try catch block is used to handle exception. 
+            try
+            {
+                objDocumentDetailsDbcontext.Document_Details.Add(objDocDetails);
+                isAdd = true;
+                int i = objDocumentDetailsDbcontext.SaveChanges();
+                if (i > 0)
+                {
+                    isAdd = true;
+                }
+
+            }
+            catch (ELibraryMgmtSysException)
+            {
+                throw;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return isAdd;
+        }
+
+        //search document
+        public bool SearchDocument()
+        {
+            bool isSearch = false;
+            try
+            {
+                
+            }
+            catch (ELibraryMgmtSysException)
+            {
+                throw;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return isSearch;
+        }
+
+    }
+}
+--------------------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : DocumentTypeDetailsBL.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 15-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ELibraryMgmtSystem.Exceptions;
+
+namespace ELibraryMgmtSystemBL.BusinessLayer
+{
+    public class DocumentTypeDetailsBL
+    {
+        //Object of Training_24Oct18_PuneEntities is referenced to null.
+        Training_24Oct18_PuneEntities objDocTypeDbContext = null;
+
+        //Consutructor of DocumentTypeDetailsBL class is used to initialize the object.
+
+        public DocumentTypeDetailsBL()
+        {
+            objDocTypeDbContext = new Training_24Oct18_PuneEntities();
+        }
+
+        //
+        public IEnumerable<Document_Type_details> DisplayDocTypeDetails()
+        {
+            IQueryable<Document_Type_details> docTypeiList;
+            //try catch is used to handle Exception
+            try 
+            {
+                docTypeiList = from objDisci in objDocTypeDbContext.Document_Type_details
+                               select objDisci;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return docTypeiList;
+        }
+
+        //retrieve by id
+        public int getDocTypeId(string docTypename)
+        {
+            Document_Type_details objdocType;
+            List<Document_Type_details> docTypeList = objDocTypeDbContext.Document_Type_details.ToList();
+            try
+            {
+                objdocType = docTypeList.SingleOrDefault(doc => doc.Document_Type_Name == docTypename);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return objdocType.Document_Type_ID;
+        }
+
+    }
+}
+----------------------------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : StringValueDocumentPath.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 15-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ELibraryMgmtSystemBL.BusinessLayer
+{
+    public class StringValueDocumentPath
+    {
+        //Parameterized constructor is used.
+        public StringValueDocumentPath(string s)
+        {
+            _value = s;
+        }
+        //Properties are used here.
+        public string Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+            }
+        }
+        string _value;
+    }
+}
+----------------------------------------------------------------------------------------------------
+/*********************************************************************************
+ File           : UserDetailsBL.cs
+ Author         : Group 3
+ Desc           : E Lib Management System
+ Creation Date  : 15-Dec-2018
+ Version        : 1.0
+ *********************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ELibraryMgmtSystem.Exceptions;
+using System.Data.SqlClient;
+using System.Configuration;
+
+namespace ELibraryMgmtSystemBL.BusinessLayer
+{
+   public class UserDetailsBL
+    {
+        
+
+
+        //Object of Training_24Oct18_PuneEntities is Referenced to null.
+
+        Training_24Oct18_PuneEntities UDdbContext = null;
+        string utype;
+        
+        //Constructor is used here to initialize the value.
+        public UserDetailsBL()
+        {
+            UDdbContext = new Training_24Oct18_PuneEntities();
+        }
+
+
+        private static bool ValidateUser(User_Details userDetailsObj)
+        {
+            StringBuilder objSB = new StringBuilder();
+            bool validUD = true;
+
+            int dobValid = DateTime.Now.Year- userDetailsObj.Date_Of_Birth.Year;
+        
+            if(userDetailsObj.User_ID != "([0-9])")
+            {
+                validUD = false;
+                objSB.Append(Environment.NewLine + "User ID Should be a Number");
+            }
+
+            if(userDetailsObj.First_Name != "([A-Z][a-z])" )
+            {
+                validUD = false;
+                objSB.Append(Environment.NewLine + "First Name Should start with Capital letter");
+            }
+
+            if (userDetailsObj.Last_Name != "([A-Z][a-z])")
+            {
+                validUD = false;
+                objSB.Append(Environment.NewLine + "Last Name Should start with Capital letter");
+            }
+
+            if (dobValid < 18)
+            {
+                validUD = false;
+                objSB.Append(Environment.NewLine + "Age should be 18");
+            }
+            if(userDetailsObj.Land_Line_Number != "([0-9]{3}-[0-9]{4}-[0-9]{4})")
+            {
+                validUD = false;
+                objSB.Append(Environment.NewLine + "Landline number should be in xxx-xxxx-xxxx format");
+
+            }
+            if (userDetailsObj.Mobile_Number != "([0-9]{3}-[0-9]{4}-[0-9]{4})")
+            {
+                validUD = false;
+                objSB.Append(Environment.NewLine + "Mobile number should be in xxx-xxxx-xxxx format");
+
+            }
+            if (!(userDetailsObj.User_Type.Equals("Subscriber") || userDetailsObj.User_Type.Equals("Non Subscriber") || userDetailsObj.User_Type.Equals("Administrator")))
+            {
+                validUD = false;
+                objSB.Append(Environment.NewLine + "User Type should be Subscriber or Nonsubscriber or Administrator.");
+            }
+            if (!(userDetailsObj.Gender.Equals("M") || userDetailsObj.Gender.Equals("F") || userDetailsObj.Gender.Equals("O")))
+            {
+                validUD = false;
+                objSB.Append(Environment.NewLine + "User Type should be Subscriber or Nonsubscriber or Administrator.");
+            }
+            if (validUD == false)
+                 throw new ELibraryMgmtSysException(objSB.ToString());
+                //throw new Exception(objSB.ToString());
+
+            return validUD;
+        }
+
+        //add user details
+        public bool AddUserDetails(User_Details objUser)
+        {
+            
+            bool AddUD = false;
+            //try catch is used here  to handle exception.
+            try
+            {
+                if (ValidateUser(objUser))
+                {
+                    UDdbContext.User_Details.Add(objUser);
+                    int i = UDdbContext.SaveChanges();
+                    if (i > 0)
+                    {
+                        AddUD = true;
+                    }
+
+                }
+            }
+            catch (ELibraryMgmtSysException ue)
+            {
+                throw ue;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return AddUD;
+        }
+
+        //login user
+        public bool Login(string userID, string password, string usertype)
+        {
+            List<User_Details> userList = UDdbContext.User_Details.ToList();
+            bool loginUser = false;
+            try
+            {
+                foreach (var user in userList)
+                {
+                    if (user.Password == password && user.User_ID == userID && user.User_Type == usertype)
+                        loginUser = true;
+                }
+            }
+            catch (ELibraryMgmtSysException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return loginUser;
+        }
+
+        public string CheckCust(string userid)
+        {
+            List<User_Details> uselist = UDdbContext.User_Details.ToList();
+            try
+            {
+                foreach (var uid in uselist)
+                {
+                    if (uid.User_ID == userid)
+                        utype = uid.User_Type;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return utype;
+        }
+
+        public IEnumerable<User_Details> SelectAll()
+        {
+            List<User_Details> lstuserDetails = new List<User_Details>();
+            var result = from n in UDdbContext.User_Details
+                         select n;//linq query is used here
+            foreach (var item in result)
+            {
+                lstuserDetails.Add(item);
+            }
+
+            return lstuserDetails;
+        }
+    }
+}
+---------------------------------------------------------------------------------------------------------------
